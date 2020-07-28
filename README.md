@@ -3,13 +3,12 @@
 # OpSiMore/FIEM
 #
 **OpSiMore** is a web repositery for the contributions of the OpSiMorE team.
-- ---
 
 **Author**: [Gersende Fort](<https://perso.math.univ-toulouse.fr/gfort/>)
 
 *Affiliation: [CNRS](<http://www.cnrs.fr/en>) and [Institut de Mathématiques de Toulouse](<https://www.math.univ-toulouse.fr/>), France*
 
-** Created in**: July 2020
+**Created in**: July 2020
 
 - ---
 
