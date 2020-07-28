@@ -1,6 +1,3 @@
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-
 # OpSiMorE/FIEM
 #
 **OpSiMorE** is a web repositery for the contributions of the OpSiMorE team.
@@ -93,3 +90,6 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
 -----
 ### How to use the matlab files available in the subdirectory *ToyExample* ?
 
+
+<script type="text/javascript" async
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
