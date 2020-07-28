@@ -1,8 +1,8 @@
 <!-- Required extensions: mathjax, headerid(level=3)-->
 
-# OpSiMore/FIEM
+# OpSiMorE/FIEM
 #
-**OpSiMore** is a web repositery for the contributions of the OpSiMorE team.
+**OpSiMorE** is a web repositery for the contributions of the OpSiMorE team.
 
 **Author**: [Gersende Fort](<https://perso.math.univ-toulouse.fr/gfort/>)
 
