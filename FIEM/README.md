@@ -22,8 +22,9 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 
 ### How to use the matlab files available in the subdirectory *ToyExample* ?
 
-See the document [here](<https://github.com/gfort-lab/OpSiMorE/blob/master/FIEM/README.html>)
+See the document [here](<https://github.com/gfort-lab/OpSiMorE/blob/master/FIEM/README.pdf>)
 
 -----
 ### How to use the matlab files available in the subdirectory *ToyExample* ?
 
+See the document [here](<https://github.com/gfort-lab/OpSiMorE/blob/master/FIEM/README.pdf>)
