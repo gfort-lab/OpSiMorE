@@ -1,4 +1,6 @@
-<!-- Required extensions: mathjax, headerid(level=3)-->
+<script type="text/javascript" async
+
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 
 # OpSiMorE/FIEM
 #
