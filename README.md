@@ -92,4 +92,5 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
 
 
 <script type="text/javascript" async
+
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
