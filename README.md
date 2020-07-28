@@ -1,5 +1,3 @@
-<!-- Required extensions: mathjax, headerid(level=3)-->
-
 # OpSiMorE/FIEM
 #
 **OpSiMorE** is a web repositery for the contributions of the OpSiMorE team.
@@ -91,4 +89,3 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
     
 -----
 ### How to use the matlab files available in the subdirectory *ToyExample* ?
-
