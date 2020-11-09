@@ -22,9 +22,9 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 
 - ---
 
-## <span style = "color: blue"> How to use the matlab files available in the subdirectory *ToyExample* ?</style></span>
+## <h3 style = "color: blue"> How to use the matlab files available in the subdirectory *ToyExample* ?</h3>
 
-* <span style = "color: blue"> Statistical model: </style></span> n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
+* <h4 style = "color: blue"> Statistical model: </h4> n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
 \[
 \mathcal{N}_y(A Z_i,I);
 \]
@@ -34,11 +34,11 @@ the random variables \((Z_1,\ldots, Z_n)\) are independent with the same distrib
 \]
 The matrices X and A are known.
 
-* <span style = "color: blue"> Statistical analysis: </style></span>  the goal is the estimation of the parameter  \(\theta\) through the minimum of the criterion
+* <h4 style = "color: blue"> Statistical analysis: </h4>  the goal is the estimation of the parameter  \(\theta\) through the minimum of the criterion
 \[ - \frac{1}{n}  \log g(Y_1,\ldots, Y_n;\theta) + \frac{\upsilon}{2} \|\theta\|^2  \]
 where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y_1, \ldots, Y_n) \). In this toy example, the solution exists, is unique and is even explicit (see section 4.1).
 
-* <span style = "color: blue"> Description of the file *SampleData.m* </style></span>
+* <h4 style = "color: blue"> Description of the file *SampleData.m* </h4>
     * The variables : 
         * *n*: the size of the data set
         * *dim_theta*: the size of the vector \(\theta\)
@@ -50,7 +50,7 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
     
     * The ouput of the function: the function creates a file *DataLong.mat* which contains the observations  *\(Y_1, \ldots, Y_n\)*, the matrices X and A, and the parameter *theta_true*. 
 
-* <span style = "color: blue"> Description of the file *FIEM_Gamma.m* </style></span>
+* <h4 style = "color: blue"> Description of the file *FIEM_Gamma.m* </h4>
 
     * The call
 
@@ -92,7 +92,7 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
     
     
 -----
-##  <span style = "color: blue"> How to use the matlab files available in the subdirectory *MNIST* ?:</style></span>
+##  <h3 style = "color: blue"> How to use the matlab files available in the subdirectory *MNIST* ?:</h3>
 * The data set can be found on https://www.kaggle.com/avnishnish/mnist-original#mnist-original.mat, by downloading the file *mnist-original.mat*. 
 It contains a *label* vector of length 7e4 and a *data* matrix of size 784 x 7e4. The first 6e4 columns are the "learning set" and the last 1e4 columns are the "test set". A parametric statistical model is defined and the parameter of the model is learnt by using examples from the "learning set"; before this estimation phase, the data are pre-processed as described in *readMNIST.m*
 
@@ -105,7 +105,7 @@ will create the file Data.mat. Then, the call
 will run FIEM (which will call "Initialisation.m"). The file  RunEstimationFIEM.mat is created (see below for a description od its content). 
 
 
-* <span style = "color: blue"> Description of the file "readMNIST.m" </style></span>
+* <h4 style = "color: blue"> Description of the file "readMNIST.m" </h4>
     * The first step is to extract the training examples : *data_train* contains the first n=6e4 columns of *data*, and *label_train* contains the first n=6e4 components of *labels*.
     * Step 2: 67 features among the 784 ones are constant over the n examples: they are removed from the set of features. Therefore, the matrix *X* of features is of size *n x d_init* with *d_init=717*.
     * The third step reduces the dimension by ACP: standardize each column of X (expectation zero, standard deviation 1) and compute the singular value decomposition of *X' X*. Finally, consider the projection of *X* on the principal components. This yields the *n x d_init* matrix *Xred* which is saved in the file *Data.mat*.
@@ -119,7 +119,7 @@ will run FIEM (which will call "Initialisation.m"). The file  RunEstimationFIEM.
     * Output file: *Data.mat* contains the *n x d_init* matrix *Xred*, with *n=6e4* and *d_init=717*.
    
    
-* <span style = "color: blue"> Statistical model:</style></span> 
+* <h4 style = "color: blue"> Statistical model:</h4> 
     * *n* observations (Y_1, ..., Y_n) taking values in \( \mathbb{R}^{d_{init}} \) colected in a *d_init x n* matrix. Only *d < d_init* are selected. 
     * The statistical problem at hand consists in fitting a Gaussian Mixture Model in dimension *d*, with *L* components, on the features. 
     * Therefore, the parameter collects *L* weights (i.e. non negative real numbers with sum equal to one), *L* vectors of length *d* collecting the *L* expectations of the Gaussian distributions, and the covariance matrices. Here, is it assumed that all the components have the same *d x d* covariance matrix.
@@ -128,7 +128,7 @@ In this example, the objective function to be minimized is the negated normalize
     where for any observation \( Y \in \mathbb{R}^{d} \), we have
 \[ p(Y,\theta) =  \sum_{k=1}^L \alpha_k \, \mathcal{N}_d(\mu_k,\Sigma)(Y) \qquad \theta = (\alpha_1, ..., \alpha_L, \mu_1, ..., \mu_L, \Sigma).\]
 
-* <span style = "color: blue"> Description of the file "FIEM_MNIST.m":</style></span>
+* <h4 style = "color: blue"> Description of the file "FIEM_MNIST.m":</h4>
     * General variables to be fixed:
         * *RunInit*: a binary variable to indicate if the initial parameter is read in a file called * .mat* or has to be constructed. The default value is 1.
         * *DisplayPlot*: a binary variable to indicate of some graphical controls are displayed during the run or not. The default value is 1.
@@ -160,7 +160,7 @@ For example, the specifications *kswitch = 6*, *minibatch = 100*, *NbrEpoch = 53
 
     
 
-* <span style = "color: blue"> Description of the file "Initialisation.m":</style></span>
+* <h4 style = "color: blue"> Description of the file "Initialisation.m":</h4>
 A method for defining an initial value for the set of parameters (the weights, the expectations and the covariance matrix of a Gaussian mixture model) is proposed. This function calls "SampleInvCov.m".
     * Input variables:
         * *X*: the *d x n* matrix of features, modeled as *n* points from a Gaussian Mixture Model in dimension *d*.
