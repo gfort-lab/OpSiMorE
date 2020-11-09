@@ -13,7 +13,7 @@
 
 - ---
 
-# <h3 style="color:#ff0000">FIEM : Fast Incremental Expectation Maximization</h3>
+# FIEM : Fast Incremental Expectation Maximization
 
 
 Here are the codes associated to the paper "Fast Incremental Expectation Maximization for non-convex finite-sum optimization: non asymptotic convergence bounds" available from  [this web page](<https://perso.math.univ-toulouse.fr/gfort/publications-2/technical-report/>); author : G. Fort, P. Gach and E. Moulines
@@ -22,7 +22,7 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 
 - ---
 
-## <h3 style = "color: blue"> How to use the matlab files available in the subdirectory *ToyExample* ?</h3>
+## How to use the matlab files available in the subdirectory *ToyExample* ? 
 
 * <h4 style = "color: blue"> Statistical model: </h4> n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
 \[
