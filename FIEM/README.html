@@ -17,12 +17,13 @@ MathJax.Hub.Config({
 <body>
 <!-- Required extensions: mathjax, headerid(level=3)-->
 
-<h3 id="opsimorefiem">OpSiMorE/FIEM</h3>
+<h3 id="opsimorefiem">OpSiMore/FIEM</h3>
 <h3 id="_1"></h3>
-<p><strong>OpSiMorE</strong> is a web repositery for the contributions of the OpSiMorE team.</p>
+<p><strong>OpSiMore</strong> is a web repositery for the contributions of the OpSiMorE team.</p>
+<hr>
 <p><strong>Author</strong>: <a href="https://perso.math.univ-toulouse.fr/gfort/">Gersende Fort</a></p>
 <p><em>Affiliation: <a href="http://www.cnrs.fr/en">CNRS</a> and <a href="https://www.math.univ-toulouse.fr/">Institut de Mathématiques de Toulouse</a>, France</em></p>
-<p><strong>Created in</strong>: July 2020</p>
+<p><strong> Created in</strong>: July 2020</p>
 <hr>
 <h4 id="fiem-fast-incremental-expectation-maximization">FIEM : Fast Incremental Expectation Maximization</h4>
 <p>Here are the codes associated to the paper "Fast Incremental Expectation Maximization for non-convex finite-sum optimization: non asymptotic convergence bounds" available from  <a href="https://perso.math.univ-toulouse.fr/gfort/publications-2/technical-report/">this web page</a>; author : G. Fort, P. Gach and E. Moulines</p>
@@ -55,8 +56,8 @@ where <script type="math/tex">g(y_1, \cdots, y_n;\theta)</script> denotes the di
 <li><em>n</em>: the size of the data set</li>
 <li><em>dim_theta</em>: the size of the vector <script type="math/tex">\theta</script>
 </li>
-<li><em>dim_Y</em>: the size of each vector Y</li>
-<li><em>dim_Z</em> (or <em>p</em> in the paper): the size of each hidden variable Z </li>
+<li><em>dim_Y</em>: the size of each vector Y_i</li>
+<li><em>dim_Z</em> (or <em>p</em> in the paper): the size of each hidden variable Z_i </li>
 <li><em>theta_true</em>: the value of the parameter used to generate the observations as described by the above statistical model. The entries of <em>theta_true</em> are sampled uniformly in [-5,5] and then 40% of these entries are set to zero (they are chosen at random).</li>
 <li>The columns of the <em>dim_Y x dim_Z</em> matrix A are sampled from a stationary AR(1) with variance 1 and coefficient <em>rho = 0.8</em></li>
 <li>The columns of the <em>dim_Z x dim_theta</em> matrix X are sampled from a stationary AR(1) with variance 1 and coefficient <em>rho = 0.9</em></li>
@@ -124,6 +125,113 @@ where <script type="math/tex">g(y_1, \cdots, y_n;\theta)</script> denotes the di
 </li>
 </ul>
 <hr>
-<h5 id="how-to-use-the-matlab-files-available-in-the-subdirectory-toyexample_1">How to use the matlab files available in the subdirectory <em>ToyExample</em> ?</h5>
+<h5 id="how-to-use-the-matlab-files-available-in-the-subdirectory-mnist">How to use the matlab files available in the subdirectory <em>MNIST</em> ?</h5>
+<ul>
+<li>The data set can be found on https://www.kaggle.com/avnishnish/mnist-original#mnist-original.mat, by downloading the file <em>mnist-original.mat</em>. 
+It contains a <em>label</em> vector of length 7e4 and a <em>data</em> matrix of size 784 x 7e4. The first 6e4 columns are the "learning set" and the last 1e4 columns are the "test set". A parametric statistical model is defined and the parameter of the model is learnt by using examples from the "learning set"; before this estimation phase, the data are pre-processed as described in <em>readMNIST.m</em></li>
+</ul>
+<p>First, download the file "mnist-original.mat" in the same directory as the .m following files. Then the call</p>
+<blockquote>
+<p>>&gt; readMNIST</p>
+</blockquote>
+<p>will create the file Data.mat. Then, the call </p>
+<blockquote>
+<p>>&gt; FIEM_MNIST</p>
+</blockquote>
+<p>will run FIEM (which will call "Initialisation.m"). The file  RunEstimationFIEM.mat is created (see below for a description od its content). </p>
+<ul>
+<li>
+<p>Description of the file "readMNIST.m"</p>
+<ul>
+<li>The first step is to extract the training examples : <em>data_train</em> contains the first n=6e4 columns of <em>data</em>, and <em>label_train</em> contains the first n=6e4 components of <em>labels</em>.</li>
+<li>Step 2: 67 features among the 784 ones are constant over the n examples: they are removed from the set of features. Therefore, the matrix <em>X</em> of features is of size <em>n x d_init</em> with <em>d_init=717</em>.</li>
+<li>The third step reduces the dimension by ACP: standardize each column of X (expectation zero, standard deviation 1) and compute the singular value decomposition of <em>X' X</em>. Finally, consider the projection of <em>X</em> on the principal components. This yields the <em>n x d_init</em> matrix <em>Xred</em> which is saved in the file <em>Data.mat</em>.</li>
+<li>Displayed<ul>
+<li>fig 1. an image from the training set with label equal to 3</li>
+<li>fig 2. the eignevalues of <em>X'X</em> (the last 5 ones are removed)</li>
+<li>fig 3. Projection of the <em>n</em> examples on the space spanned by the first three principal component.</li>
+<li>fig 4. Projection of the <em>n</em> examples on the space spanned by the first three principal components; the colors indicate the class.</li>
+<li>fig 5. Projection of the <em>n</em> examples on the space spanned by the first two principal components;  the colors indicate the class.</li>
+<li>fig 6. Projection of the <em>n</em> examples on the space spanned by the first principal component;  the colors indicate the class.</li>
+</ul>
+</li>
+<li>Output file: <em>Data.mat</em> contains the <em>n x d_init</em> matrix <em>Xred</em>, with <em>n=6e4</em> and <em>d_init=717</em>.</li>
+</ul>
+</li>
+<li>
+<p>Statistical model : </p>
+<ul>
+<li><em>n</em> observations (Y_1, ..., Y_n) taking values in <script type="math/tex"> \mathbb{R}^{d_{init}} </script> colected in a <em>d_init x n</em> matrix. Only <em>d &lt; d_init</em> are selected. </li>
+<li>The statistical problem at hand consists in fitting a Gaussian Mixture Model in dimension <em>d</em>, with <em>L</em> components, on the features. </li>
+<li>Therefore, the parameter collects <em>L</em> weights (i.e. non negative real numbers with sum equal to one), <em>L</em> vectors of length <em>d</em> collecting the <em>L</em> expectations of the Gaussian distributions, and the covariance matrices. Here, is it assumed that all the components have the same <em>d x d</em> covariance matrix.
+In this example, the objective function to be minimized is the negated normalized log-likelihood</li>
+</ul>
+</li>
+</ul>
+<p>
+<script type="math/tex; mode=display">
+- \frac{1}{n} \sum_{i=1}^n \log p(Y_i, \theta) 
+</script>
+    where for any observation <script type="math/tex"> Y \in \mathbb{R}^{d} </script>, we have
+<script type="math/tex; mode=display">
+p(Y,\theta) =  \sum_{k=1}^L \alpha_k \, \mathcal{N}_d(\mu_k,\Sigma)(Y) \qquad \theta = (\alpha_1, ..., \alpha_L, \mu_1, ..., \mu_L, \Sigma).
+</script>
+</p>
+<ul>
+<li>Description of the file "FIEM_MNIST.m"<ul>
+<li>General variables to be fixed:<ul>
+<li><em>RunInit</em>: a binary variable to indicate if the initial parameter is read in a file called * .mat* or has to be constructed. The default value is 1.</li>
+<li><em>DisplayPlot</em>: a binary variable to indicate of some graphical controls are displayed during the run or not. The default value is 1.</li>
+</ul>
+</li>
+<li>Variables:<ul>
+<li><em>L</em> is the number of classes in the Gaussian Mixture Model. The default value is <em>L=12</em></li>
+<li><em>kswitch</em> defines the number of epochs of Online-EM before switching to epochs of FIEM. The default value is <em>kswitch=6</em>.</li>
+<li><em>NbrEpoch</em> is related to the number of conditional expectation evaluations : this  number of evaluations will be set to <em>NbrEpoch x n</em> for an OnlineEM epoch and to <em>NbrEpoch x 2n</em> for a FIEM epoch. The default value is <em>NbrEpoch = 53</em>.</li>
+<li><em>minibatch</em> defines the size of the mini-batches. The default value is <em>minibatch = 100</em>. </li>
+<li><em>NbrRun</em> is the number of independent runs of the algorithm. The default value is <em>NbrRun = 10</em>.</li>
+<li><em>vectpas</em> collects the learning rate; it may be modified at each epoch. Its default value is <em>5e-3</em>.</li>
+</ul>
+</li>
+<li>Displayed<ul>
+<li>fig 1. evolution of the estimated parameter sequence of weights (<em>L</em> curves); along the current run, vs the number of iterations </li>
+<li>fig 2. evolution of the estimated parameter sequence of a vector of expectation - the one of the first component of the Gaussian mixture (<em>d</em> curves); along the current run, vs the number of iterations.</li>
+<li>fig 3. evolution of the eigenvalues of the estimated sequence of the covariance matrix (<em>d</em> curves); along the current run vs the number of iterations.</li>
+<li>fig 4. evolution of the log-likelihood; along the current run vs the number of epochs.</li>
+</ul>
+</li>
+<li>Output file "RunEstimationFIEM.mat"<ul>
+<li><em>RunStoreWeight</em> is a <em>L x NbrRun</em> matrix which collects the estimated weights <script type="math/tex">\alpha_1, ..., \alpha_L</script> at the end of each <em>NbrRun</em> independent runs of FIEM.</li>
+<li><em>RunStoreMean</em> is a <em>d x L x NbrRun</em> tensor which collects the estimated <em>L</em> vectors <script type="math/tex">\mu_1, ..., \mu_L </script> at the end of each <em>NbrRun</em> independent runs of FIEM.</li>
+<li><em>RunStoreInvCov</em> is a <em>d x d x NbrRun</em> tensor which collects the estimated <em>d x d</em> covariance matrix at the end of each <em>NbrRun</em> independent runs of FIEM.</li>
+<li><em>RunLogLikelihood</em> is a <em>NbrRun x (1+NbrEpoch)</em> matrix which collects, for each <em>NbrRun</em> independent runs of FIEM, the value of the normalized log-likelihood at the end of each epoch (the first column is the value for the initial parameter).</li>
+<li><em>StoreWeight</em> is a <em>L x (1+NbrEpoch)</em> matrix which collects the estimated weights <script type="math/tex">\alpha_1, ..., \alpha_L</script> at the end of each epoch (the first column is the value for the initial parameter).</li>
+<li><em>StoreMean1</em> is a <em>d x (1+NbrEpoch)</em> matrix which collects the estimated first expectation <script type="math/tex">\mu_1</script> at the end of each epoch (the first column is the value for the initial parameter).</li>
+<li><em>StoreEigen</em> is a <em>d x (1+NbrEpoch)</em> matrix which collects the eigenvalues of the estimated inverse-covariance matrix at the end of each epoch (the first column is the value for the initial parameter).</li>
+<li><em>Sweight</em> is a <em>L x NbrIter</em> matrix which collects the estimated weights <script type="math/tex">\alpha_1, ..., \alpha_L</script> at the end of each iteration. </li>
+<li><em>Smu</em> is a <em>d x NbrIter</em> matrix which collects the estimated expectation <script type="math/tex">\mu_1</script> at the end of each iteration. </li>
+<li><em>Seigen</em> is a <em>d x NbrIter</em> matrix which collects the eigenvalues of the estimated inverse-covariance matrix at the end of each iteration. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>For example, the specifications <em>kswitch = 6</em>, <em>minibatch = 100</em>, <em>NbrEpoch = 53</em> will implement <em>6 n / 100</em> iterations of Online EM and then <em>47 n / 100</em> iterations of FIEM. The total number of conditional expectations evaluations will be <em>6 n + 2 x 47 n</em> since each FIEM iteration calls <em>2 minibatch</em> conditional expectations evaluations.</p>
+<ul>
+<li>Description of the file "Initialisation.m"
+A method for defining an initial value for the set of parameters (the weights, the expectations and the covariance matrix of a Gaussian mixture model) is proposed. This function calls "SampleInvCov.m".<ul>
+<li>Input variables:<ul>
+<li><em>X</em>: the <em>d x n</em> matrix of features, modeled as <em>n</em> points from a Gaussian Mixture Model in dimension <em>d</em>.</li>
+<li><em>L</em>: the number of components in the Gaussian Mixture Model</li>
+</ul>
+</li>
+<li>Output variables:<ul>
+<li>a <em>d x L</em> matrix collecting the <em>L</em> expectations of the Gaussian components in dimension <em>d</em></li>
+<li>a <em>d x (dL)</em> matrix concatening <em>L</em> inverse covariance matrices of size <em>d x d</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </body>
 </html>
