@@ -25,14 +25,14 @@ MathJax.Hub.Config({
 <p><em>Affiliation: <a href="http://www.cnrs.fr/en">CNRS</a> and <a href="https://www.math.univ-toulouse.fr/">Institut de Mathématiques de Toulouse</a>, France</em></p>
 <p><strong> Created in</strong>: July 2020</p>
 <hr>
-<h4 id="fiem-fast-incremental-expectation-maximization">FIEM : Fast Incremental Expectation Maximization</h4>
+<h3 id="fiem-fast-incremental-expectation-maximization"><span style = "color: red"> FIEM : Fast Incremental Expectation Maximization</style></span></h3>
 <p>Here are the codes associated to the paper "Fast Incremental Expectation Maximization for non-convex finite-sum optimization: non asymptotic convergence bounds" available from  <a href="https://perso.math.univ-toulouse.fr/gfort/publications-2/technical-report/">this web page</a>; author : G. Fort, P. Gach and E. Moulines</p>
 <p>In this repository, the subdirectory <em>ToyExample</em> contains the MATLAB codes for the toy example (section 4); the subdirectory <em>MNIST</em> contains the MATLAB codes for the more challenging example using the MNIST data set.</p>
 <hr>
-<h5 id="how-to-use-the-matlab-files-available-in-the-subdirectory-toyexample">How to use the matlab files available in the subdirectory <em>ToyExample</em> ?</h5>
+<h4 id="how-to-use-the-matlab-files-available-in-the-subdirectory-toyexample"><span style = "color: blue"> How to use the matlab files available in the subdirectory <em>ToyExample</em> ?</style></span></h4>
 <ul>
 <li>
-<p>Statistical model : n observations <script type="math/tex">(Y_1, \ldots, Y_n) </script>. For the value <script type="math/tex">\theta \in \mathbb{R}^q</script> of the parameter: conditionally to <script type="math/tex">(Z_1, \ldots, Z_n)</script>, the random variables <script type="math/tex">Y_i</script> are independent with distribution
+<p><span style = "color: blue"> Statistical model: </style></span> n observations <script type="math/tex">(Y_1, \ldots, Y_n) </script>. For the value <script type="math/tex">\theta \in \mathbb{R}^q</script> of the parameter: conditionally to <script type="math/tex">(Z_1, \ldots, Z_n)</script>, the random variables <script type="math/tex">Y_i</script> are independent with distribution
 <script type="math/tex; mode=display">
 \mathcal{N}_y(A Z_i,I);
 </script>
@@ -43,12 +43,12 @@ the random variables <script type="math/tex">(Z_1,\ldots, Z_n)</script> are inde
 The matrices X and A are known.</p>
 </li>
 <li>
-<p>Statistical analysis: the goal is the estimation of the parameter  <script type="math/tex">\theta</script> through the minimum of the criterion
+<p><span style = "color: blue"> Statistical analysis: </style></span>  the goal is the estimation of the parameter  <script type="math/tex">\theta</script> through the minimum of the criterion
 <script type="math/tex; mode=display"> - \frac{1}{n}  \log g(Y_1,\ldots, Y_n;\theta) + \frac{\upsilon}{2} \|\theta\|^2  </script>
 where <script type="math/tex">g(y_1, \cdots, y_n;\theta)</script> denotes the distribution of the vector <script type="math/tex">(Y_1, \ldots, Y_n) </script>. In this toy example, the solution exists, is unique and is even explicit (see section 4.1).</p>
 </li>
 <li>
-<p>Description of the file <em>SampleData.m</em> </p>
+<p><span style = "color: blue"> Description of the file <em>SampleData.m</em> </style></span></p>
 <ul>
 <li>
 <p>The variables : </p>
@@ -69,7 +69,7 @@ where <script type="math/tex">g(y_1, \cdots, y_n;\theta)</script> denotes the di
 </ul>
 </li>
 <li>
-<p>Description of the file <em>FIEM_Gamma.m</em></p>
+<p><span style = "color: blue"> Description of the file <em>FIEM_Gamma.m</em> </style></span></p>
 <ul>
 <li>
 <p>The call</p>
@@ -125,7 +125,7 @@ where <script type="math/tex">g(y_1, \cdots, y_n;\theta)</script> denotes the di
 </li>
 </ul>
 <hr>
-<h5 id="how-to-use-the-matlab-files-available-in-the-subdirectory-mnist">How to use the matlab files available in the subdirectory <em>MNIST</em> ?</h5>
+<h4 id="how-to-use-the-matlab-files-available-in-the-subdirectory-mnist"><span style = "color: blue"> How to use the matlab files available in the subdirectory <em>MNIST</em> ?:</style></span></h4>
 <ul>
 <li>The data set can be found on https://www.kaggle.com/avnishnish/mnist-original#mnist-original.mat, by downloading the file <em>mnist-original.mat</em>. 
 It contains a <em>label</em> vector of length 7e4 and a <em>data</em> matrix of size 784 x 7e4. The first 6e4 columns are the "learning set" and the last 1e4 columns are the "test set". A parametric statistical model is defined and the parameter of the model is learnt by using examples from the "learning set"; before this estimation phase, the data are pre-processed as described in <em>readMNIST.m</em></li>
@@ -141,7 +141,7 @@ It contains a <em>label</em> vector of length 7e4 and a <em>data</em> matrix of 
 <p>will run FIEM (which will call "Initialisation.m"). The file  RunEstimationFIEM.mat is created (see below for a description od its content). </p>
 <ul>
 <li>
-<p>Description of the file "readMNIST.m"</p>
+<p><span style = "color: blue"> Description of the file "readMNIST.m" </style></span></p>
 <ul>
 <li>The first step is to extract the training examples : <em>data_train</em> contains the first n=6e4 columns of <em>data</em>, and <em>label_train</em> contains the first n=6e4 components of <em>labels</em>.</li>
 <li>Step 2: 67 features among the 784 ones are constant over the n examples: they are removed from the set of features. Therefore, the matrix <em>X</em> of features is of size <em>n x d_init</em> with <em>d_init=717</em>.</li>
@@ -159,26 +159,21 @@ It contains a <em>label</em> vector of length 7e4 and a <em>data</em> matrix of 
 </ul>
 </li>
 <li>
-<p>Statistical model : </p>
+<p><span style = "color: blue"> Statistical model:</style></span> </p>
 <ul>
 <li><em>n</em> observations (Y_1, ..., Y_n) taking values in <script type="math/tex"> \mathbb{R}^{d_{init}} </script> colected in a <em>d_init x n</em> matrix. Only <em>d &lt; d_init</em> are selected. </li>
 <li>The statistical problem at hand consists in fitting a Gaussian Mixture Model in dimension <em>d</em>, with <em>L</em> components, on the features. </li>
 <li>Therefore, the parameter collects <em>L</em> weights (i.e. non negative real numbers with sum equal to one), <em>L</em> vectors of length <em>d</em> collecting the <em>L</em> expectations of the Gaussian distributions, and the covariance matrices. Here, is it assumed that all the components have the same <em>d x d</em> covariance matrix.
-In this example, the objective function to be minimized is the negated normalized log-likelihood</li>
-</ul>
+In this example, the objective function to be minimized is the negated normalized log-likelihood
+<script type="math/tex; mode=display"> - \frac{1}{n} \sum_{i=1}^n \log p(Y_i, \theta)  </script>
+where for any observation <script type="math/tex"> Y \in \mathbb{R}^{d} </script>, we have
+<script type="math/tex; mode=display"> p(Y,\theta) =  \sum_{k=1}^L \alpha_k \, \mathcal{N}_d(\mu_k,\Sigma)(Y) \qquad \theta = (\alpha_1, ..., \alpha_L, \mu_1, ..., \mu_L, \Sigma).</script>
 </li>
 </ul>
-<p>
-<script type="math/tex; mode=display">
-- \frac{1}{n} \sum_{i=1}^n \log p(Y_i, \theta) 
-</script>
-    where for any observation <script type="math/tex"> Y \in \mathbb{R}^{d} </script>, we have
-<script type="math/tex; mode=display">
-p(Y,\theta) =  \sum_{k=1}^L \alpha_k \, \mathcal{N}_d(\mu_k,\Sigma)(Y) \qquad \theta = (\alpha_1, ..., \alpha_L, \mu_1, ..., \mu_L, \Sigma).
-</script>
-</p>
+</li>
+<li>
+<p><span style = "color: blue"> Description of the file "FIEM_MNIST.m":</style></span></p>
 <ul>
-<li>Description of the file "FIEM_MNIST.m"<ul>
 <li>General variables to be fixed:<ul>
 <li><em>RunInit</em>: a binary variable to indicate if the initial parameter is read in a file called * .mat* or has to be constructed. The default value is 1.</li>
 <li><em>DisplayPlot</em>: a binary variable to indicate of some graphical controls are displayed during the run or not. The default value is 1.</li>
@@ -218,7 +213,7 @@ p(Y,\theta) =  \sum_{k=1}^L \alpha_k \, \mathcal{N}_d(\mu_k,\Sigma)(Y) \qquad \t
 </ul>
 <p>For example, the specifications <em>kswitch = 6</em>, <em>minibatch = 100</em>, <em>NbrEpoch = 53</em> will implement <em>6 n / 100</em> iterations of Online EM and then <em>47 n / 100</em> iterations of FIEM. The total number of conditional expectations evaluations will be <em>6 n + 2 x 47 n</em> since each FIEM iteration calls <em>2 minibatch</em> conditional expectations evaluations.</p>
 <ul>
-<li>Description of the file "Initialisation.m"
+<li><span style = "color: blue"> Description of the file "Initialisation.m":</style></span>
 A method for defining an initial value for the set of parameters (the weights, the expectations and the covariance matrix of a Gaussian mixture model) is proposed. This function calls "SampleInvCov.m".<ul>
 <li>Input variables:<ul>
 <li><em>X</em>: the <em>d x n</em> matrix of features, modeled as <em>n</em> points from a Gaussian Mixture Model in dimension <em>d</em>.</li>
