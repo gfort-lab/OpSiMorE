@@ -1,6 +1,6 @@
 <!-- Required extensions: mathjax, headerid(level=3)-->
 
-# OpSiMore/FIEM
+# OpSiMore
 #
 **OpSiMore** is a web repositery for the contributions of the OpSiMorE team.
 - ---
