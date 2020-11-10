@@ -24,7 +24,7 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 
 ## How to use the matlab files available in the subdirectory *ToyExample* ? 
 
-* <h4 style = "color: blue"> Statistical model: </h4> n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
+* Statistical model: n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
 \[
 \mathcal{N}_y(A Z_i,I);
 \]
@@ -34,11 +34,11 @@ the random variables \((Z_1,\ldots, Z_n)\) are independent with the same distrib
 \]
 The matrices X and A are known.
 
-* <h4 style = "color: blue"> Statistical analysis: </h4>  the goal is the estimation of the parameter  \(\theta\) through the minimum of the criterion
+* Statistical analysis:  the goal is the estimation of the parameter  \(\theta\) through the minimum of the criterion
 \[ - \frac{1}{n}  \log g(Y_1,\ldots, Y_n;\theta) + \frac{\upsilon}{2} \|\theta\|^2  \]
 where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y_1, \ldots, Y_n) \). In this toy example, the solution exists, is unique and is even explicit (see section 4.1).
 
-* <h4 style = "color: blue"> Description of the file *SampleData.m* </h4>
+* Description of the file *SampleData.m* 
     * The variables : 
         * *n*: the size of the data set
         * *dim_theta*: the size of the vector \(\theta\)
@@ -50,7 +50,7 @@ where \(g(y_1, \cdots, y_n;\theta)\) denotes the distribution of the vector \((Y
     
     * The ouput of the function: the function creates a file *DataLong.mat* which contains the observations  *\(Y_1, \ldots, Y_n\)*, the matrices X and A, and the parameter *theta_true*. 
 
-* <h4 style = "color: blue"> Description of the file *FIEM_Gamma.m* </h4>
+* Description of the file *FIEM_Gamma.m* 
 
     * The call
 
