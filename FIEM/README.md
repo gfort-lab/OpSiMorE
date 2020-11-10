@@ -23,6 +23,7 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 - ---
 
 ## How to use the matlab files available in the subdirectory *ToyExample* ?
+read the html page [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIEM/README.html>); or a pdf description [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIEM/README.pdf>);
 
 * Statistical model: n observations \((Y_1, \ldots, Y_n) \). For the value \(\theta \in \mathbb{R}^q\) of the parameter: conditionally to \((Z_1, \ldots, Z_n)\), the random variables \(Y_i\) are independent with distribution
 \[ \mathcal{N}_y(A Z_i,I); \]
