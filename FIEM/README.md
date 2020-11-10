@@ -27,7 +27,8 @@ read the html page [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIE
 
 
 
-* Statistical model: n observations <img src="https://render.githubusercontent.com/render/math?math=(Y_1, ..., Y_n)">. For the value <img src="https://render.githubusercontent.com/render/math?math=\theta \in \mathbb{R}^q"> of the parameter: conditionally to  <img src="https://render.githubusercontent.com/render/math?math=(Z_1, ..., Z_n)">, the random variables <img src="https://render.githubusercontent.com/render/math?math=(Y_i)_i"> are independent with distribution
+* Statistical model: n observations <img src="https://render.githubusercontent.com/render/math?math=(Y_1, ..., Y_n)">. For the value <img src="https://render.githubusercontent.com/render/math?math=\theta \in \mathbb{R}^q"> of the parameter: conditionally to  <img src="https://render.githubusercontent.com/render/math?math=(Z_1, ..., Z_n)">, the random variables <img src="https://render.githubusercontent.com/render/math?math=(Y_i)_i"> are independent with distribution ![\[ \mathcal{N}_y(A Z_i,I); \]
+](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5C%5B+%5Cmathcal%7BN%7D_y%28A+Z_i%2CI%29%3B+%5C%5D%0A)
 \[ \mathcal{N}_y(A Z_i,I); \]
 the random variables <img src="https://render.githubusercontent.com/render/math?math=(Z_1, ..., Z_n)"> are independent with the same distribution
 \[ \mathcal{N}_p(X \theta, I). \]
