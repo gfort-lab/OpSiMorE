@@ -43,76 +43,15 @@ function [generic, param, additional] = PGdual_github(data,MAP,MCMC,param)
 %%
 %% structure generic
 %%
-% generic.logpiMAX: 1 x 1, the maximal value of the log-likelihood
+% generic.empirical_mean: 2 x T. The empirical expectation of the bivariate chain , computed by discarding the samples of the burn-in phase.
+%
+% generic.R_quantiles: q x T. The q quantiles for each of the T components of R, computed by discarding the samples of the burn-in phase.
 % 
-% generic.empirical_MAP:  2T x 1, the empirical a posteriori MAP for R
-% (original space)  and O (normalized)
-%
-% generic.empirical_mean: 2T x 1, the a posteriori expectation for R
-% (original space) and O (normalized)
-%
-% generic.R_quantiles: length(param.vectQ) x T, the quantiles for R
-% (original space)
-%
-% generic.R_median: T x 1, the a posteriori median for R (original space)
-%
-% generic.derivative_R_MAP: (T-1) x 1, the derivative of the MAP a
-% posteriori for R
-%
-% generic.derivative_R_MAP_emp: (T-1) x 1, the derivative of the empirical
-% a posteriori MAP, for R
-%
-% generic.derivative_quantiles: length(param.vectQ) x (T-1), the derivative
-% of the quantiles, for R
-%%
-%% structure param
-%%
-% param.vectQ
-%
-%%
-%% structure additional
-%%
-% additional.autocorrelationR: 1x 1e5, autocorrelation function (mean
-% values of the last T0 R components)
-%
-% additional.autocorrelationO: 1x 1e5, autocorrelation function (mean
-% values of the last T0 O components)
-%
-% additional.autocorrelationR_full: 1x 1e5, autocorrelation function (mean
-% values of the R components)
-%
-% additional.autocorrelationO_full: 1x 1e5, autocorrelation function (mean
-% values of the O components)
-%
-% additional.second_moment: (2T) x (2T), second moment under the a
-% posteriori distribution for R (original) and O (normalized)
-%
-% additional.gamma_R: 1 x MCMC.forget, values of the gammaR coeff
-%
-% additional.gamma_O: 1 x MCMC.forget, values of the gammaO coeff
-%
-% additional.alpha: 1 x MCMC.NbrMC, acceptance-rejectio ratio;
-%
-% additional.D_T: 1 x (MCMC.NbrMC-MCMC.forget+1), mean number of points
-% proposed in the support of the a posteriori distribution
-%
-% additional.logPi: 1 x (MCMC.NbrMC-MCMC.forget+1), logPi along iterations.
-%
-% additional.ExpectationSequence: (2T) x --, empirical expectation at
-% different time steps for R (original) and O (normalized)
-%
-% additional.Moment2Sequence: (4T^2) x --, empirical L2-moment (reshaped of the 2T x 2T matrix) at
-% different time steps for R (original) and O (normalized)
-%
-% additional.distance2MAP_R = auxRdistMAP, 1 x (NbrMC-forget), distance to
-% the MAP for R, along iterations; distance normalized by norm(rhat);
-%
-% additional.distance2MAP_O = auxOdistMAP, 1 x (NbrMC-forget), distance to
-% the MAP for O, along iterations; distance normalized by norm(ohatnorm)
-%
-% additional.JumpSizeSequence_R: 1 x (NbrMC-forget)/1e3, evolution of the estimation of the jump size for R, normalized by norm(rhat). Every 1e3 iterations
+% generic.O_quantiles: q x T. The q quantiles for each of the T components of O, computed by discarding the samples of the burn-in phase.
 % 
-% additional.JumpSizeSequence_O: , same thing for O. Every 1e3 iterations.
+% additional_gamma: collects the successive values of the step size, adapted during the burn-in phase (and no more adapted, after the burn-in phase).
+%
+% additional.logPi: collects the successive values of the log-density along iterations.
 
 
 
@@ -140,6 +79,9 @@ if isfield(MCMC,'chain_length')
 else 
     NbrMC  = 1e7;
 end
+
+
+
 
 if isfield(MCMC,'chain_burnin')
     forget = MCMC.chain_burnin; 
@@ -503,9 +445,6 @@ generic.empirical_mean = [mean(StoreMarkovChainR(:,:),2); mean(StoreMarkovChainO
 
 generic.R_quantiles = MatrixQuantileR;
 generic.O_quantiles = MatrixQuantileO;
-
-generic.R_median = MatrixQuantileR(vectQ == 0.5,1:T);
-generic.O_median = MatrixQuantileO(vectQ == 0.5,1:T);
 
 additional.gamma = Gamma_store(1:forget);
 
