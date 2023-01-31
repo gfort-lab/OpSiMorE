@@ -1,5 +1,7 @@
-function [generic, param, additional] = PGdual_github(data,MAP,MCMC,param)
-%%
+function [generic, additional] = PGdual_github(data,MAP,MCMC,param)
+%% 
+%% Developed by G. Fort, January 2023. 
+%% 
 %% PGdual algorithm
 %%
 %% 
