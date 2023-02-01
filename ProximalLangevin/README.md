@@ -1,4 +1,6 @@
-    
+
+
+
 # Description of the matlab files
 
 The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers for the target density
@@ -6,9 +8,11 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
   > 
   > where ${\bf R} = (R_1, \cdots, R_T)$, ${\bf O} = (O_1, \cdots, O_T)$ and $\|\cdot\|_1$ denotes the L1-norm.   $D_2$ is a (T-2) x T Laplacian matrix.    
   > This density is positive when (i) $R_t \geq 0$ and (ii) $R_t\Phi_t+ O_t > 0$ when $Z_t >0$ and $R_t \Phi_t + O_t \geq 0$ when $Z_t \geq 0$.  The density is zero otherwise.
-# PGdual algorithm
+  
+  
+# ${\color{blue} \text{PGdual algorithm}}$
 
-### Input structures 
+### ${\color{violet} \text{Input structures}}$
 
 **data.Z**: T x 1.  The counts from time t=1 to time t=T, $(Z_1, \cdots, Z_T)$.    
 **data.Zphi**: T x 1. The convolution of the counts and the serial function, $(\Phi_1, \cdots, \Phi_T)$.  
@@ -27,16 +31,16 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 **param.displayglobal**: a binary variable set to '1' or '0' for the display (or not) of the graphical controls during the run of the algorithm.  *The default value is '0'*  
 **param.frequency**: an interger, which defines the number of iterations between two updates of the step size.  *The default value is 1e4*
 
-
-### Output structures
+### ${\color{violet} \text{Output structures}}$
 **generic.empirical_mean**: 2 x T. The empirical expectation of the bivariate chain $({\bf R,O})$, computed by discarding the samples of the burn-in phase.  
 **generic.R_quantiles**: q x T. The q quantiles for each of the T components of ${\bf R}$,  computed by discarding the samples of the burn-in phase.  
 **generic.O_quantiles**: q x T. The q quantiles for each of the T components of ${\bf O}$,  computed by discarding the samples of the burn-in phase.  
 **additional.gamma**: collects the successive values of the step size, adapted during the burn-in phase (and no more adapted, after the burn-in phase).  
 **additional.logPi**: collects the successive values of the log-density along iterations.   
 
+### ${\color{violet} \text{Example}}$
 
-### Pseudo-code
+### ${\color{violet} \text{Pseudo-code}}$
 * Define $\bar D$ a $T \times T$ invertible matrix, extension of $D_2$. 
 * Denote by ${\bf A}$ the $(2T) \times (2T)$ block diagonal matrix with blocks $\bar D$ and $\lambda_R/\lambda_0  \, I_T$.  
 * Initialize the chain in the image space: ${\bf Z} = {\bf A} ({\bf R}, {\bf O})$.
