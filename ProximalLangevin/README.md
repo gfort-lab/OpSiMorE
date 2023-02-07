@@ -23,11 +23,11 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 
 **MCMC.chain_length**: 1 x 1. The total length of the Markov chain, including the burn-in samples.  *The default value is 1e7*.  
 **MCMC.chain_burnin**: 1 x 1. The length of the burn-in phase.  *The default value is 50% of the chain_length*.  
-**MCMC.initial_point**: (2T) x 1. The initial of the bivariate chain $({\bf R,O})$.  *The default value is the constant vector 1 for R, and the null vector for O*  
+**MCMC.initial_point**: (2T) x 1. The initial value of the bivariate chain $({\bf R,O})$.  *The default value is the constant vector 1 for R, and the null vector for O*  
 **MCMC.target_ratio**: 1 x 1. A number in (0,1). For the adaptation of the step size, provide a target value for the acceptance-rejection ratio.  
 **MCMC.gamma_init**: 1 x 1. A positive number, provides the initial value of the step size.  *The default value is 1e-7 when T=70*
 
-**param.vectQ**: a row vector, that collects the order of the quantiles    
+**param.vectQ**: a row vector, that collects the order of the quantiles   of the distribution of each component of the bivariate chain, to be estimated from the sampler (by discarding the samples of the burn in phase).  
 **param.displayglobal**: a binary variable set to '1' or '0' for the display (or not) of the graphical controls during the run of the algorithm.  *The default value is '0'*  
 **param.frequency**: an interger, which defines the number of iterations between two updates of the step size.  *The default value is 1e4*
 
