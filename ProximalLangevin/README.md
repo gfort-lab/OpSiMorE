@@ -40,33 +40,5 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 
 ### ${\color{violet} \text{Example}}$
 
-### ${\color{violet} \text{Pseudo-code}}$
-* Define $\bar D$ a $T \times T$ invertible matrix, extension of $D_2$. 
-* Denote by ${\bf A}$ the $(2T) \times (2T)$ block diagonal matrix with blocks $\bar D$ and $\lambda_R/\lambda_0  \, I_T$.  
-* Initialize the chain in the image space: ${\bf Z} = {\bf A} ({\bf R}, {\bf O})$.
-* Store the value of the log-density at the initial point. Denote by $\tilde \pi$ the image of $\pi$ by the linear transformation ${\bf A}$.
-* Repeat
-  * Sample a candidate in the image space 
-    * Compute *Grad*, the gradient of the smooth component of $\log \tilde \pi$, evaluated at the current point $Z$.
-    * Compute a gradient step: *GradStep* $= Z +\gamma$ *Grad*.
-    * Modify components $3$ to $2T$: compute the proximal associated to the function $\lambda_R \gamma |\cdot|$, and applied to components $3$ to $2T$ of *GradStep*.
-    * Add i.i.d. random variables with variance $2 \gamma$ on each of the $2T$ components. 
-    * Denote by *Proposal* this Gaussian proposal. 
-  * Test if *Proposal* is in the support of the distribution $\tilde \pi$.
-  * If it is not: reject *Proposal* and set the new value of chain equal to $Z$.
-  * It it is: implement an accept-rejection step
-    * starting from *Proposal*, compute the proximal-gradient step as above (replacing $Z$ with *Proposal* in the method above), and obtain *DriftRev*
-    * evaluate a Gaussian density with covariance matrix $2 \gamma I_{2T}$ at the point *DriftRev*
-    * evaluate a Gaussian density with covariance matrix $2 \gamma I_{2T}$ at the point *Proposal*
-    * evaluate $\log \tilde \pi$ at the point *DriftRev*
-    * evaluae $\log \tilde \pi$ at the point *Proposal*
-    * compute the acceptance-rejection ratio $\alpha$.
-    * define the new value of the chain: with probability $\alpha$, set $Z = Proposal$; and otherwise do not change $Z$.
-  * Store: the current value of the chain and the current value of $\log \pi$.
-  * Update $\gamma$: during the burn-in phase, regularly update $\gamma$ in order to reach a targeted empirical acceptance-rejection rate.
-* Discard the sample of the burn-in phase. With the other ones: 
-  * move the chain to the original space by applying ${\bf A}^{-1}$.
-  * for each of the $(2T)$ components of the chain, compute the quantiles and the empirical expectation. 
-
 
 
