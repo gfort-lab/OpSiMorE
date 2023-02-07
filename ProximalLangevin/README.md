@@ -39,7 +39,9 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 **output.logPi**: collects the successive values of the log-density along iterations.   
 
 ### ${\color{violet} \text{Example}}$
-
+```MCMC.parameter = 1e7  
+a = 3  
+```
 
 
 # ${\color{blue} \text{PGdec algorithm}}$
