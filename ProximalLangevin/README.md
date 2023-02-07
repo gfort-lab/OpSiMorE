@@ -22,7 +22,7 @@ The Covid19 data provided in the data sets are those made available at the Johns
 ### ${\color{violet} \text{Input structures}}$
 
 **data.Z**: T x 1.  The counts from time t=1 to time t=T, $(Z_1, \cdots, Z_T)$.    
-**data.Zphi**: T x 1. The convolution of the counts and the serial function. The serial function $\phi_1, \cdots, \phi_T$ is equal to the probability density function of a Gamma distribution with shape parameter   and scale parameter , evaluated at $t=1, \cdots, t=T$. 
+**data.Zphi**: T x 1. The convolution of the counts and the serial function. The serial function $\phi_1, \cdots, \phi_T$ is equal to the probability density function of a Gamma distribution with shape parameter $1/0.28$ and scale parameter $1.87$, evaluated at $t=1, \cdots, t=T$. 
 
 **MAP.lambdaR**: 1 x 1. Coefficient for the penalty term on the Laplacian of the reproduction numbers  
 **MAP.lambdaO**: 1 x 1. Coefficient of the penalty term on the outliers.  
@@ -36,7 +36,7 @@ The Covid19 data provided in the data sets are those made available at the Johns
 
 **param.vectQ**: a row vector, that collects the order of the quantiles   of the distribution of each component of the bivariate chain, to be estimated from the sampler (by discarding the samples of the burn in phase).  
 **param.displayglobal**: a binary variable set to '1' or '0' for the display (or not) of the graphical controls during the run of the algorithm.  *The default value is '0'*  
-**param.frequency**: an interger, which defines the number of iterations between two updates of the step size.  *The default value is 1e4*
+**param.frequency**: an integer, which defines the number of iterations between two updates of the step size.  *The default value is 1e4*
 
 ### ${\color{violet} \text{Output structures}}$
 **output.empirical_mean**: 2 x T. The empirical expectation of the bivariate chain $({\bf R,O})$, computed by discarding the samples of the burn-in phase.  
