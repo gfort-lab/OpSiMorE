@@ -7,10 +7,13 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
   > $$ \log \pi(R_1, \cdots R_T, O_1, \cdots, O_T) =  - \sum_{t=1}^T \left( Z_t  \log(R_t \Phi_t + O_t) - (R_t \Phi_t + O_t)\right)+ \lambda_R \| {\bf D_2 R}\|_1 + \lambda_0 \|{\bf O}\|_1 $$
   > 
   > where ${\bf R} = (R_1, \cdots, R_T)$, ${\bf O} = (O_1, \cdots, O_T)$ and $\|\cdot\|_1$ denotes the L1-norm.   $D_2$ is a (T-2) x T Laplacian matrix.    
-  > This density is positive when (i) $R_t \geq 0$ and (ii) $R_t\Phi_t+ O_t > 0$ when $Z_t >0$ and $R_t \Phi_t + O_t \geq 0$ when $Z_t \geq 0$.  The density is zero otherwise.
+  > This density is positive when for all $t=1, \cdots, T$: (a)  $R_t \geq 0$ and (b) $R_t\Phi_t+ O_t > 0$ when $Z_t >0$ and $R_t \Phi_t + O_t \geq 0$ when $Z_t \geq 0$. The density is zero otherwise.
   > 
 
-The algorithm below designs Markov chain Monte Carlo samplers with target distribution $\pi$. They return, for each of the $2T$ components, (i) the empirical expectation, (ii) the empirical quantiles computed along the path of the Markov chain (after a burn in phase). 
+The algorithms below design Markov chain Monte Carlo samplers with target distribution $\pi$.   
+They return, for each of the $2T$ components, 
+  - the empirical expectation, 
+  - the empirical quantiles computed along the path of the Markov chain (after a burn in phase). 
   
 The Covid19 data provided in the data sets are those made available at the Johns Hopkins University (https://coronavirus.jhu.edu)  
   
@@ -40,14 +43,16 @@ The Covid19 data provided in the data sets are those made available at the Johns
 **output.R_quantiles**: q x T. The q quantiles for each of the T components of ${\bf R}$,  computed by discarding the samples of the burn-in phase.  
 **output.O_quantiles**: q x T. The q quantiles for each of the T components of ${\bf O}$,  computed by discarding the samples of the burn-in phase.  
 **output.gamma**: collects the successive values of the step size, adapted during the burn-in phase (and no more adapted, after the burn-in phase).  
-**output.logPi**: collects the successive values of the log-density along iterations.   
+**output.logPi**: collects the successive values of the log-density along iterations.  
+**output.lastsample**: (2T) x 1. It collects the last value of the Markov chain (the $T$ components of the ${\bf R}$ block and the $T$ components of the ${\bf O}$ block).
 
 ### ${\color{violet} \text{Example}}$
 ```
 %% load data.Z and data.Zphi and MCMC.initial_point
 % The initial value was obtained as follows: 
-    % set:  MCMC.initial_point = [ones(T,1); zeros(T,1)]; 
-    % run GibbsPGdual with MAP.method_augmentation = 'invert';
+    % set:  MCMC.initial_point = [auxinitR ;(data.Z-auxinitR.*data.Zphi)/2]
+    %       where auxinitR = min(2,max(coeff(2)*(1:T)+coeff(1),0.5)) and coeff is the regression vectors of data.Z on [data.Zphi (1:T)'.*data.Zphi]
+    % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
     % save the last value of the Markov chain (output.lastsample)
     % set: MCMC.initial_point = output.lastsample;
 load FranceDataSet1.mat 
@@ -69,6 +74,43 @@ outputPGdual = PGdual_github(data,MAP,MCMC,param);
 ```
 
 
+# ${\color{blue} \text{GibbPGdual algorithm}}$
+
+### ${\color{violet} \text{Input structures}}$ 
+The same as **PGdual**
+
+### ${\color{violet} \text{Output structures}}$   
+The same as **PGdual**  except that there are one learning rate $\gamma$ per block ${\bf R}$ and ${\bf O}$, which implies that **output.gamma** is now **output.gammaR** and **output.gammaO**. 
+
+
+### ${\color{violet} \text{Example}}$
+```
+%% load data.Z and data.Zphi and MCMC.initial_point
+% The initial value was obtained as follows: 
+    % set:  MCMC.initial_point = [auxinitR ;(data.Z-auxinitR.*data.Zphi)/2]
+    %       where auxinitR = min(2,max(coeff(2)*(1:T)+coeff(1),0.5)) and coeff is the regression vector of data.Z on [data.Zphi (1:T)'.*data.Zphi]
+    % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
+    % save the last value of the Markov chain (output.lastsample)
+    % set: MCMC.initial_point = output.lastsample;
+load FranceDataSet1.mat 
+
+MAP.lambdaR = 3.5 * std(data.Z);
+MAP.lambdaO = 0.05;
+
+param.T = length(data.Z);
+param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
+param.vecQ = [0.025 0.5 0.075];
+
+MCMC.chain_length = 1.2e7;
+MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
+MCMC.gamma_init = 1e-7;
+MCMC.target_ratio = 0.25;
+MCMC.covariance = 'identity'; % or 'invert' or 'orthogonal'
+
+outputGibbsPGdual = GibbsPGdual_github(data,MAP,MCMC,param);
+```
+
+
 # ${\color{blue} \text{PGdec algorithm}}$
 
 ### ${\color{violet} \text{Input structures}}$ 
@@ -85,7 +127,7 @@ The same as **PGdual**
 %% load data.Z and data.Zphi and MCMC.initial_point
 % The initial value was obtained as follows: 
     % set:  MCMC.initial_point = [auxinitR ;(data.Z-auxinitR.*data.Zphi)/2]
-    %       where auxinitR = min(2,max(coeff(2)*(1:T)+coeff(1),0.5)) and coeff are the regression of vectors of data.Z on [data.Zphi (1:T)'.*data.Zphi]
+    %       where auxinitR = min(2,max(coeff(2)*(1:T)+coeff(1),0.5)) and coeff is the regression vector of data.Z on [data.Zphi (1:T)'.*data.Zphi]
     % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
     % save the last value of the Markov chain (output.lastsample)
     % set: MCMC.initial_point = output.lastsample;
@@ -118,4 +160,4 @@ All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 **JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on   
 **IndiaDataSet1.mat** the data from India, on $T=70$ days, available on 
 
-
+![FranceDataSet1](/FranceDataSet1.png)"data.Z from DataSet1, France"
