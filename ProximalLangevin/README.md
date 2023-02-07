@@ -32,13 +32,22 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 **param.frequency**: an interger, which defines the number of iterations between two updates of the step size.  *The default value is 1e4*
 
 ### ${\color{violet} \text{Output structures}}$
-**generic.empirical_mean**: 2 x T. The empirical expectation of the bivariate chain $({\bf R,O})$, computed by discarding the samples of the burn-in phase.  
-**generic.R_quantiles**: q x T. The q quantiles for each of the T components of ${\bf R}$,  computed by discarding the samples of the burn-in phase.  
-**generic.O_quantiles**: q x T. The q quantiles for each of the T components of ${\bf O}$,  computed by discarding the samples of the burn-in phase.  
-**additional.gamma**: collects the successive values of the step size, adapted during the burn-in phase (and no more adapted, after the burn-in phase).  
-**additional.logPi**: collects the successive values of the log-density along iterations.   
+**output.empirical_mean**: 2 x T. The empirical expectation of the bivariate chain $({\bf R,O})$, computed by discarding the samples of the burn-in phase.  
+**output.R_quantiles**: q x T. The q quantiles for each of the T components of ${\bf R}$,  computed by discarding the samples of the burn-in phase.  
+**output.O_quantiles**: q x T. The q quantiles for each of the T components of ${\bf O}$,  computed by discarding the samples of the burn-in phase.  
+**output.gamma**: collects the successive values of the step size, adapted during the burn-in phase (and no more adapted, after the burn-in phase).  
+**output.logPi**: collects the successive values of the log-density along iterations.   
 
 ### ${\color{violet} \text{Example}}$
+
+
+
+# ${\color{blue} \text{PGdec algorithm}}$
+
+### ${\color{violet} \text{Input structures}}$ 
+The same as {\tt PGdual}, except that 
+**MAP.method_augmentation** is not required.  
+**MCMC.covariance** is required. It describes the covariance matrix of the Gaussian proposal. its value is either 'orthogonal', 'invert', or 'identity'.
 
 
 
