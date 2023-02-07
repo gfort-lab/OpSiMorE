@@ -74,7 +74,7 @@ outputPGdual = PGdual_github(data,MAP,MCMC,param);
 ```
 
 ### ${\color{violet} \text{Pseudocode}}$  
-The pseudo-code is given [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/ProximalLangevin/ProximalLangevin_github.pdf>).
+The pseudo-code is given [here](<https://github.com/gfort-lab/OpSiMorE/tree/master/ProximalLangevin/ProximalLangevin_github.pdf>).
 
 
 
@@ -154,7 +154,7 @@ outputPGdec = PGdec_github(data,MAP,MCMC,param);
 ```
 
 ### ${\color{violet} \text{Pseudocode}}$  
-The pseudo-code is given [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/ProximalLangevin/ProximalLangevin_github.pdf>).
+The pseudo-code is given [here](<https://github.com/gfort-lab/OpSiMorE/tree/master/ProximalLangevin/ProximalLangevin_github.pdf>).
 
 
 
