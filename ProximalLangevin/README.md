@@ -6,7 +6,8 @@
 The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers for the target density
   > $$ \log \pi(R_1, \cdots R_T, O_1, \cdots, O_T) =  - \sum_{t=1}^T \left( Z_t  \log(R_t \Phi_t + O_t) - (R_t \Phi_t + O_t)\right)+ \lambda_R \| {\bf D_2 R}\|_1 + \lambda_0 \|{\bf O}\|_1 $$
   > 
-  > where ${\bf R} = (R_1, \cdots, R_T)$, ${\bf O} = (O_1, \cdots, O_T)$ and $\|\cdot\|_1$ denotes the L1-norm.   $D_2$ is a (T-2) x T Laplacian matrix.    
+  > where ${\bf R} = (R_1, \cdots, R_T)$, ${\bf O} = (O_1, \cdots, O_T)$ and $\|\cdot\|_1$ denotes the L1-norm.   $D_2$ is a (T-2) x T Laplacian matrix.    ![image](https://user-images.githubusercontent.com/68843522/217315878-d2ac9ec6-9db4-4c6a-a02b-1aee1802c92b.png)
+
   > This density is positive when for all $t=1, \cdots, T$: (a)  $R_t \geq 0$ and (b) $R_t\Phi_t+ O_t > 0$ when $Z_t >0$ and $R_t \Phi_t + O_t \geq 0$ when $Z_t \geq 0$. The density is zero otherwise.
   > 
 
@@ -157,7 +158,8 @@ All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 
 **FranceDataSet1.mat** the data from France, on $T=70$ days, available on Feb 7 2023.  
 **FranceDataSet2.mat** the data from France, on $T=70$ days, available on May 1st 2022.  
-**JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on   
-**IndiaDataSet1.mat** the data from India, on $T=70$ days, available on 
+**JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on (about) September 20 2022.
+**IndiaDataSet1.mat** the data from India, on $T=70$ days, available on (about)
 
-![FranceDataSet1](/ProximalLangevin/FranceDataSet1.png)    ![FranceDataSet2](/ProximalLangevin/FranceDataSet12.png)
+
+<img src="/ProximalLangevin/FranceDataSet1.png" alt="DataSet1,Frace" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet2.png" alt="DataSet1,Frace" width="25%" height="25%">
