@@ -47,7 +47,7 @@ The codes below describe two Hastings-Metropolis samplers and two Gibbs samplers
 ### ${\color{violet} \text{Input structures}}$ 
 The same as **PGdual**, except that   
 **MAP.method_augmentation** is not required.  
-**MCMC.covariance** is required. It describes the covariance matrix of the Gaussian proposal. its value is either 'orthogonal', 'invert', or 'identity'.
+**MCMC.covariance** is required. It describes the covariance matrix of the Gaussian proposal. Its value is either 'orthogonal', 'invert', or 'identity'.
 
 ### ${\color{violet} \text{Output structures}}$   
 The same as **PGdual**  
