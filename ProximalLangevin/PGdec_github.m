@@ -1,8 +1,8 @@
-function [output] = PGdual_github(data,MAP,MCMC,param)
+function [output] = PGdec_github(data,MAP,MCMC,param)
 %% 
-%% Developed by G. Fort, January 2023. 
+%% Developed by G. Fort, February 2023. 
 %% 
-%% PGdual algorithm
+%% PGdec algorithm
 %%
 %% 
 %% INPUT
@@ -15,8 +15,6 @@ function [output] = PGdual_github(data,MAP,MCMC,param)
 %%
 % MAP.lambdaR: 1 x 1,  a positive regularization parameter for the R-block
 % MAP.lambdaO: 1 x 1, a positive regularization parameter for the O-block
-% 
-% MAP.method_augmentation: 1 x 1, either 'orthogonal', or 'invert'
 %
 %% structure array MCMC
 %%
@@ -30,6 +28,8 @@ function [output] = PGdual_github(data,MAP,MCMC,param)
 % MCMC.target_ratio: 1x1, target value of the accept-reject ratio
 %
 % MCMC.gamma_init: 1x1, positive step size  
+%
+% MCMC.covariance: 1x1, either 'invert', or 'orthogonal' or 'identity'.
 %%
 %% structure array param 
 % param.vectQ: a row vector, collects the order of the quantiles
@@ -41,7 +41,7 @@ function [output] = PGdual_github(data,MAP,MCMC,param)
 %%
 %%%%%%%%%%
 %% OUTPUT
-%%%%%%%%%%
+%%%%%%%%%$
 %%
 %% structure output
 %%
@@ -71,21 +71,12 @@ lambdaO = MAP.lambdaO;
 ratioAR = MCMC.target_ratio;
 vectQ      = param.vectQ;
 
-if isfield(MAP,'method_augmentation')
-    method  = MAP.method_augmentation; 
-else 
-    method  = 'orthogonal';
-end
-
 
 if isfield(MCMC,'chain_length')
     NbrMC  = MCMC.chain_length; 
 else 
     NbrMC  = 1e7;
 end
-
-
-
 
 if isfield(MCMC,'chain_burnin')
     forget = MCMC.chain_burnin; 
@@ -107,6 +98,7 @@ else
     Gamma = 1e-7;
 end
  
+
 if isfield(param,'displayglobal')
     displayglobal = param.displayglobal;
 else 
@@ -148,37 +140,59 @@ D2 = D2*4/sqrt(6); % (T-2) x T
 
 lambdaR = lambdaR*sqrt(6)/4;
 
-% Define the barA matrix (2T) x (2T)
-barA = zeros(2*T,2*T);
-barA(3:T,1:T) = D2;    % (T-2) x T
-barA(T+1:2*T,T+1:2*T) = (lambdaO/lambdaR)*diag(Zphi);  % T x T
 
-barA(1,1) =1;
-barA(2,1) = -2;
-barA(2,2) =1;
-barA(2,:) = barA(2,:)/sqrt(5);
+% Define the three blocks from D2
+D2block{1} = D2(1:3:T-2,:);   
+D2block{2} = D2(2:3:T-2,:);   
+D2block{3} = D2(3:3:T-2,:);  
+
+% Define a projector operator
+Projblock{1} = eye(T)-D2block{1}'*D2block{1};    % T x T
+Projblock{2} = eye(T)-D2block{2}'*D2block{2};   % T x T
+Projblock{3} = eye(T)-D2block{3}'*D2block{3};   % T x T
 
 
-switch method
+% Define the (2T-2) x (2T) matrix A
+A = zeros(2*T-2,2*T);
+A(1:T-2,1:T) = D2;  % (T-2) x T
+A(T-1:2*T-2,T+1:2*T) = (lambdaO/lambdaR)*diag(Zphi);  % T x T
+
+% Define the covariance matrices 
+    % Define the barA matrix (2T) x (2T)
+    barA = zeros(2*T,2*T);
+    barA(3:2*T,:) = A;    % (2T-2) x 2T
+    
+    barA(1,1) =1;
+    barA(2,1) = -2;
+    barA(2,2) =1;
+    barA(2,:) = barA(2,:)/sqrt(5);
+
+switch MCMC.covariance
+    case 'identity'
+        Cov = eye(2*T);   % (2T) x (2T)
+        SqrtCov = eye(2*T); % (2T) x (2T)
+        InvCov = eye(2*T); % (2T) x (2T)
+
     case 'orthogonal'
         for ii=2:-1:1
             barA(ii,1:T) = (barA(ii,1:T)'-barA(ii+1:T,1:T)'*inv(barA(ii+1:T,1:T)*barA(ii+1:T,1:T)')*barA(ii+1:T,1:T)*barA(ii,1:T)')';
             barA(ii,1:T) = barA(ii,1:T)/norm(barA(ii,1:T));
         end;
-    
+        Cov = inv(barA)*(inv(barA))';  % (2T) x (2T)
+        SqrtCov = sqrtm(Cov);  % (2T) x (2T)
+        InvCov = barA'*barA; % (2T) x (2T)
+
+    case 'invert'
+        Cov = inv(barA)*(inv(barA))';  % (2T) x (2T)
+        SqrtCov = sqrtm(Cov);  % (2T) x (2T)
+        InvCov = barA'*barA; % (2T) x (2T)
 end
 
 
-% Compute the inverse of barA
-invbarA = zeros(2*T,2*T);   % (2T) x (2T)
-invbarA(1:T,1:T) = inv(barA(1:T,1:T));
-invbarA(T+1:2*T,T+1:2*T) = (lambdaR/lambdaO)*diag(1./Zphi);  
-
-% Compute the transpose of the inverse of barA
-invbarAt = invbarA';    % (2T) x (2T) 
-
 % Where the data are positive
 ZdataPos = Zdata>0; % T x 1
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -187,8 +201,8 @@ ZdataPos = Zdata>0; % T x 1
 fprintf('\n Allocate memory for storage'); 
 
 % Store the Markov chain 
-StoreMarkovChainR = zeros(T,1+NbrMC);  % T x (1+NbrMC)  -- in the original space
-StoreMarkovChainO = zeros(T,1+NbrMC);  % T x (1+NbrMC) -- in the original space, NOT normalized
+StoreMarkovChainR = zeros(T,1+NbrMC);  % T x (1+NbrMC)  
+StoreMarkovChainO = zeros(T,1+NbrMC);  % T x (1+NbrMC) -- NOT normalized
 
 % A binary vector, '1' when a proposed point is accepted
 VectorAccept =  zeros(1,NbrMC);
@@ -200,10 +214,13 @@ Gamma_store = zeros(1,1+NbrMC);
 logpi_store = zeros(1,1+NbrMC);
 
 % Sample all the Gaussian r.v. for the proposal step
-GaussRnd = randn(2*T,NbrMC); 
+GaussRnd = SqrtCov*randn(2*T,NbrMC); 
 
 % Sample Uniform r.v. for the acceptance-rejection step
 UnifRnd = rand(1,NbrMC);
+
+% Sample a r.v. in (1,2,3) for selecting the block of D2
+BlockRnd = ceil(3*rand(1,NbrMC)); 
 
 
 %% Display the data
@@ -223,25 +240,20 @@ end;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf('\n Initialization of the MCMC sampler');
 
-% Initialization of the Markov chain in the image space
-InitPointOn = InitPointO./Zphi; % T x 1
-AuxInitChainTilde = barA * [InitPointR; InitPointOn];   % (2T) x 1
-
 
 % Initialization of the current value of the chain 
-currentMCtilde = AuxInitChainTilde; % (2T) x 1 
-currentMCorig = [InitPointR; InitPointOn];   % (2T) x 1  
+InitPointOn =  InitPointO./Zphi; % T x 1
+currentMC = [InitPointR; InitPointOn];   % (2T) x 1  
 
 % Store the initial value of the chain, in the original space
 StoreMarkovChainR(:,1) = InitPointR;   % T x 1 
 StoreMarkovChainO(:,1) = InitPointO;   % T x 1  -- NOT normalized
 
-
 % The log-Like, the penalty term and the log-density at the current point
     % the penalty term 
-NegPenaltyCurrent = -lambdaR*sum(abs(currentMCtilde(3:2*T)));   % 1 x 1
+NegPenaltyCurrent = -lambdaR*sum(abs(A*currentMC));   % 1 x 1
     % the log-likelihood term
-auxintensity = Zphi.*(currentMCorig(1:T)+currentMCorig(T+1:2*T));   % T x 1    
+auxintensity = Zphi.*(currentMC(1:T)+currentMC(T+1:2*T));   % T x 1    
 LogLikeCurrent = Zdata(ZdataPos)'*log(auxintensity(ZdataPos))-sum(auxintensity); % 1 x 1
     % log pi
 logpiCurrent = LogLikeCurrent+NegPenaltyCurrent;    % 1 x 1
@@ -265,28 +277,34 @@ tic
 for nn = 1:NbrMC
     % display or not some controls every 'displayMCfrequency' iterations
     display = displayglobal*mod(nn,displayMCfrequency);
-    
-    %% propose a candidate for Rtilde and Ontilde
-    currentMCorig = invbarA*currentMCtilde;
+
+    %% Select one of the block
+    ell = BlockRnd(nn);
+    D2local = D2block{ell};
+    D2localt = D2local';
+    Projlocal = Projblock{ell};
+
+
+    %% propose a candidate for R and On 
     Grad(1:T,1) = -Zphi;
-    aux = currentMCorig(T+1:2*T);
-    Grad(ZdataPos,1) = Zdata(ZdataPos)./(currentMCorig(ZdataPos)+aux(ZdataPos))+Grad(ZdataPos,1);    % T x 1
+    aux = currentMC(T+1:2*T);
+    Grad(ZdataPos,1) = Zdata(ZdataPos)./(currentMC(ZdataPos)+aux(ZdataPos))+Grad(ZdataPos,1);
     Grad(T+1:2*T,1) = Grad(1:T,1);  % T x 1
-    Grad = invbarAt*Grad;   % (2T) x 1
     
-    GradStep = currentMCtilde+Gamma*Grad;   % (2T) x 1
-    Drift(1:2,1) = GradStep(1:2);
-    Drift(3:2*T,1) = max(abs(GradStep(3:2*T))-Gamma*lambdaR,0).*sign(GradStep(3:2*T));
+    GradStep = currentMC+Gamma*Grad;   % (2T) x 1
+
+    auxprox = D2local*GradStep(1:T); % x x 1;
+    Drift(1:T,1) = Projlocal*GradStep(1:T)+D2localt*(max(abs(auxprox)-Gamma*lambdaR,0).*sign(auxprox));
+    Drift(T+1:2*T,1) = max(abs(GradStep(T+1:2*T))-Gamma*lambdaO*Zphi,0).*sign(GradStep(T+1:2*T));
     
     Proposal = Drift + sqrt(2*Gamma)*GaussRnd(:,nn);    % (2T) x 1
     
 
     %% Test if the proposal is in the domain D
-    ProposalOrig = invbarA*Proposal;    % (2T) x 1
-    intensity = Zphi.*(ProposalOrig(1:T)+ProposalOrig(T+1:2*T));    % T X 1
+    intensity = Zphi.*(Proposal(1:T)+Proposal(T+1:2*T));    % T X 1
     test1 = (intensity)>0;    % T x 1
     test2 = ((intensity)==0).*(Zdata==0); % T x 1
-    auxsum = sum((ProposalOrig(1:T)>=0).*(test1+test2));
+    auxsum = sum((Proposal(1:T)>=0).*(test1+test2));
     testsign = (auxsum == T); 
 
     % Display
@@ -294,27 +312,27 @@ for nn = 1:NbrMC
         %% Construction of one proposition, O-part
         figure(CntFig+1);
         clf;
-        plot(1:T,AuxInitChainTilde(T+1:2*T),'c-','LineWidth',2);
+        plot(1:T,InitPointOn,'c-','LineWidth',2);
         hold on;
         grid on;
-        plot(1:T,currentMCtilde(T+1:2*T),'r--','LineWidth',3);
+        plot(1:T,currentMC(T+1:2*T),'r--','LineWidth',3);
         plot(1:T,GradStep(T+1:2*T),'gs','LineWidth',2);
         plot(1:T,Drift(T+1:2*T),'bo','LineWidth',2);
         plot(1:T,Proposal(T+1:2*T),'k--','LineWidth',2);
-        title('Onorm Tilde: one iteration mechanism');
+        title('Onorm : one iteration mechanism');
         legend('Init','Current','Gdt step','Gdt-Prox step','Proposal','location','best');        
         
         %% Construction of one proposition, R-part
         figure(CntFig+2);
         clf;
-        plot(1:T,AuxInitChainTilde(1:T),'c-','LineWidth',2);
+        plot(1:T,InitPointR(1:T),'c-','LineWidth',2);
         hold on;
         grid on;
-        plot(1:T,currentMCtilde(1:T),'r--','LineWidth',3);
+        plot(1:T,currentMC(1:T),'r--','LineWidth',3);
         plot(1:T,GradStep(1:T),'gs','LineWidth',2);
         plot(1:T,Drift(1:T),'bo','LineWidth',2);
         plot(1:T,Proposal(1:T),'k--','LineWidth',2);
-        title('R Tilde: one iteration mechanism');
+        title('R: one iteration mechanism');
         legend('Init','Current','Gdt step','Gdt-Prox step','Proposal','location','best');        
         
         
@@ -322,20 +340,20 @@ for nn = 1:NbrMC
         figure(CntFig+3);
         plot(1:T,Zdata,'co-');
         hold on; grid on ; 
-        plot(1:T,Zdata-(Zphi.*currentMCorig(T+1:2*T)),'k-');
+        plot(1:T,Zdata-(Zphi.*currentMC(T+1:2*T)),'k-');
         legend('Data','Data - Ocurr');
         title('Denoised data');
        
         %% Display examples of points, R-part
         figure(CntFig+4);
-        plot(1:T,currentMCorig(1:T),'k-');
+        plot(1:T,currentMC(1:T),'k-');
         hold on; grid on ; 
-        title('R-orig: many paths');
+        title('R: many paths');
        
              
         %% Display the current intensity 
         figure(CntFig+5);
-        plot(1:T,Zphi.*(currentMCorig(1:T)+currentMCorig(T+1:2*T)),'k-','Linewidth',2);
+        plot(1:T,Zphi.*(currentMC(1:T)+currentMC(T+1:2*T)),'k-','Linewidth',2);
         grid on ; 
         hold on;
         plot(1:T,Zdata,'ro--','Linewidth',2);
@@ -357,29 +375,32 @@ for nn = 1:NbrMC
     if testsign == 1  
         %% compute the acceptance-rejection log-probability (log-alpha)
         % computation of the means of the Gaussian distribution
-        Gradrev(1:T,1) = Zdata./(ProposalOrig(1:T)+ProposalOrig(T+1:2*T))-Zphi;    % T x 1
+        Gradrev(1:T,1) = -Zphi;    % T x 1
+        aux = Proposal(T+1:2*T);    % T x 1
+        Gradrev(ZdataPos,1) = Zdata(ZdataPos)./(Proposal(ZdataPos)+aux(ZdataPos))+Gradrev(ZdataPos,1);    % T x 1
         Gradrev(T+1:2*T,1) = Gradrev(1:T,1);  % T x 1
-        Gradrev = invbarAt*Gradrev;   % (2T) x 1
-    
+      
         GradSteprev = Proposal+Gamma*Gradrev;   % (2T) x 1
-        Driftrev(1:2,1) = GradSteprev(1:2,1);
-        Driftrev(3:2*T,1) = max(abs(GradSteprev(3:2*T,1))-Gamma*lambdaR,0).*sign(GradSteprev(3:2*T,1));
-           
+        
+        auxproxrev = D2local*GradSteprev(1:T); % x x 1;
+        Driftrev(1:T,1) = Projlocal*GradSteprev(1:T)+D2localt*(max(abs(auxproxrev)-Gamma*lambdaR,0).*sign(auxproxrev));
+        Driftrev(T+1:2*T,1) = max(abs(GradSteprev(T+1:2*T))-Gamma*lambdaO*Zphi,0).*sign(GradSteprev(T+1:2*T));
+       
         % log-density, numerator
             % the penalty
-        NegPenaltyProposal = -lambdaR*sum(abs(Proposal(3:2*T)));   % 1 x 1
+        NegPenaltyProposal = -lambdaR*sum(abs(A*Proposal));   % 1 x 1
             % the log-likelihood term
-        auxintensity = Zphi.*(ProposalOrig(1:T)+ProposalOrig(T+1:2*T));   % T x 1    
+        auxintensity = Zphi.*(Proposal(1:T)+Proposal(T+1:2*T));   % T x 1    
         LogLikeProposal = Zdata(ZdataPos)'*log(auxintensity(ZdataPos))-sum(auxintensity); % 1 x 1
             % logpi
         logpiProposal = NegPenaltyProposal+LogLikeProposal;
         
         % log-proposal, numerator
-        QuadNum = (currentMCtilde-Driftrev)'*(currentMCtilde-Driftrev);
+        QuadNum = (currentMC-Driftrev)'*InvCov*(currentMC-Driftrev);
         logGaussNum =  -QuadNum/(4*Gamma);
         
         % log-proposal, denominator
-        QuadDenom = (Proposal - Drift)'*(Proposal - Drift);
+        QuadDenom = (Proposal - Drift)'*InvCov*(Proposal - Drift);
         logGaussDenom =  - QuadDenom/(4*Gamma);
      
         % log-ratio
@@ -391,8 +412,7 @@ for nn = 1:NbrMC
             logpiCurrent = logpiProposal;
             NegPenaltyCurrent = NegPenaltyProposal;
             LogLikeCurrent = LogLikeProposal;
-            currentMCtilde = Proposal;   % (2T) x 1
-            currentMCorig = ProposalOrig; % (2T) x 1
+            currentMC = Proposal;   % (2T) x 1
             VectorAccept(1,nn) = 1;    
        end;
     end; % of testsign==1
@@ -413,14 +433,14 @@ for nn = 1:NbrMC
   %% Store the chain and the energies
   %%-----------------------------------
    
-    StoreMarkovChainR(:,nn+1) = currentMCorig(1:T);  % T x 1  -- in the original space
-    StoreMarkovChainO(:,nn+1) = Zphi.*currentMCorig(T+1:2*T);  % T x 1 -- in the original space, not normalized
+    StoreMarkovChainR(:,nn+1) = currentMC(1:T);  % T x 1  -- in the original space
+    StoreMarkovChainO(:,nn+1) = Zphi.*currentMC(T+1:2*T);  % T x 1 -- in the original space, not normalized
     logpi_store(nn+1) = logpiCurrent;   % 1 x 1
      
 end;    % loop over the iterations of the Markov Chain
 toc
 
-clear GaussRnd UnifRnd 
+clear GaussRnd UnifRnd BlockRnd
 
 auxR = StoreMarkovChainR(:,forget+1:NbrMC);
 auxO = StoreMarkovChainO(:,forget+1:NbrMC);
@@ -459,9 +479,6 @@ output.logPi = logpi_store;
 
 output.lastsample = [StoreMarkovChainR(:,end); StoreMarkovChainO(:,end)];
     
-    
-    
- 
     
   
   
