@@ -22,7 +22,7 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
 
 - ---
 
-# <h3 style="color:#ff0000">Proximal Langevin : PGdual and PGdec</h3>
+# <h3 style="color:#ff0000">Proximal Langevin : PGdual, GibbsPGdual and PGdec</h3>
 
 Here are the codes associated to the papers 
   - Temporal Evolution of the Covid19 pandemic reproduction number: Estimations from Proximal optimization to Monte Carlo sampling, by P. Abry, G. Fort, B. Pascal and N. Pustelnik. Accepted for publication in  [EMBC 2022](<https://hal.science/hal-03565440>) proceedings.
