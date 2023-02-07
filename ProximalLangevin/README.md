@@ -160,4 +160,4 @@ All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 **JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on   
 **IndiaDataSet1.mat** the data from India, on $T=70$ days, available on 
 
-![FranceDataSet1](/ProximalLangevin/FranceDataSet1.png)![FranceDataSet2](/ProximalLangevin/FranceDataSet12.png)
+![FranceDataSet1](/ProximalLangevin/FranceDataSet1.png)    ![FranceDataSet2](/ProximalLangevin/FranceDataSet12.png)
