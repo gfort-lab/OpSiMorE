@@ -151,7 +151,7 @@ outputPGdec = PGdec_github(data,MAP,MCMC,param);
 
 
 
-# ${\color{blue} \text{Descrition of the data sets}}$
+# ${\color{blue} \text{Description of the data sets}}$
 
 All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 
