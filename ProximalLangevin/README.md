@@ -167,4 +167,4 @@ All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 **FranceDataSet1.mat** the data from France, on $T=70$ days, available on Feb 7 2023.    
 
 
-<img src="/ProximalLangevin/JapanDataSet1.png" alt="DataSet1,Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaDataSet1.png" alt="DataSet1,India" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet1.png" alt="DataSet1,France" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet2.png" alt="DataSet2,France" width="25%" height="25%">
+<img src="/ProximalLangevin/JapanDataSet1.png" alt="DataSet1,Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaDataSet1.png" alt="DataSet1,India" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet2.png" alt="DataSet2,France" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet1.png" alt="DataSet1,France" width="25%" height="25%">
