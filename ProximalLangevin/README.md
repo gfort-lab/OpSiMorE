@@ -155,10 +155,10 @@ outputPGdec = PGdec_github(data,MAP,MCMC,param);
 
 All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 
-**JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on November 30 2022.
-**FranceDataSet2.mat** the data from France, on $T=70$ days, available on May 1st 2022.  
-**FranceDataSet1.mat** the data from France, on $T=70$ days, available on Feb 7 2023.  
-**IndiaDataSet1.mat** the data from India, on $T=70$ days, available on (about)
+**JapanDataSet1.mat** the data from Japan, on $T=70$ days, available on November 30 2022.  
+**FranceDataSet2.mat** the data from France, on $T=70$ days, available on May 1st 2022.    
+**FranceDataSet1.mat** the data from France, on $T=70$ days, available on Feb 7 2023.    
+**IndiaDataSet1.mat** the data from India, on $T=70$ days, available on (about)  
 
 
 <img src="/ProximalLangevin/JapanDataSet1.png" alt="DataSet1,Japan" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet1.png" alt="DataSet1,France" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet2.png" alt="DataSet2,France" width="25%" height="25%">
