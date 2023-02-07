@@ -73,6 +73,10 @@ MCMC.target_ratio = 0.25;
 outputPGdual = PGdual_github(data,MAP,MCMC,param);
 ```
 
+### ${\color{violet} \text{Pseudocode}}$  
+The pseudo-code is given here.
+
+
 
 # ${\color{blue} \text{GibbPGdual algorithm}}$
 
@@ -149,6 +153,8 @@ MCMC.covariance = 'identity'; % or 'invert' or 'orthogonal'
 outputPGdec = PGdec_github(data,MAP,MCMC,param);
 ```
 
+### ${\color{violet} \text{Pseudocode}}$  
+The pseudo-code is given here 
 
 
 # ${\color{blue} \text{Description of the data sets}}$
