@@ -55,7 +55,7 @@ The Covid19 data provided in the data sets are those made available at the Johns
     % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
     % save the last value of the Markov chain (output.lastsample)
     % set: MCMC.initial_point = output.lastsample;
-load FranceDataSet1.mat 
+load IndiaDataSet1.mat 
 
 MAP.lambdaR = 3.5 * std(data.Z);
 MAP.lambdaO = 0.05;
@@ -63,7 +63,7 @@ MAP.method_augmentation = 'orthogonal'; % could be 'invert'
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vecQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.075];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
@@ -96,14 +96,14 @@ The same as **PGdual**  except that there are one learning rate $\gamma$ per blo
     % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
     % save the last value of the Markov chain (output.lastsample)
     % set: MCMC.initial_point = output.lastsample;
-load FranceDataSet1.mat 
+load IndiaDataSet1.mat 
 
 MAP.lambdaR = 3.5 * std(data.Z);
 MAP.lambdaO = 0.05;
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vecQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.075];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
@@ -135,14 +135,14 @@ The same as **PGdual**
     % run GibbsPGdual with MAP.method_augmentation = 'orthogonal' and chain_length = 2.5e7
     % save the last value of the Markov chain (output.lastsample)
     % set: MCMC.initial_point = output.lastsample;
-load FranceDataSet1.mat 
+load IndiaDataSet1.mat 
 
 MAP.lambdaR = 3.5 * std(data.Z);
 MAP.lambdaO = 0.05;
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vecQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.075];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
