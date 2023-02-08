@@ -78,7 +78,7 @@ The pseudo-code is given [here](<https://github.com/gfort-lab/OpSiMorE/tree/mast
 
 
 
-# ${\color{blue} \text{GibbPGdual algorithm}}$
+# ${\color{blue} \text{GibbsPGdual algorithm}}$
 
 ### ${\color{violet} \text{Input structures}}$ 
 The same as **PGdual**
@@ -216,3 +216,4 @@ figure(1);
   title(caption, 'FontSize', 10);
 
 ```
+<img src="/ProximalLangevin/JapanIC.png" alt="Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaIC.png" alt="India" width="25%" height="25%"><img src="/ProximalLangevin/France.png" alt="France" width="25%" height="25%">
