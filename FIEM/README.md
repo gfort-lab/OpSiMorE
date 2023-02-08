@@ -16,14 +16,14 @@
 # FIEM : Fast Incremental Expectation Maximization
 
 
-Here are the codes associated to the paper "Fast Incremental Expectation Maximization for non-convex finite-sum optimization: non asymptotic convergence bounds" available from  [this web page](<https://perso.math.univ-toulouse.fr/gfort/publications-2/technical-report/>); author : G. Fort, P. Gach and E. Moulines
+Here are the codes associated to the paper "Fast Incremental Expectation Maximization for non-convex finite-sum optimization: non asymptotic convergence bounds" available from  [this web page](<https://hal.science/hal-02617725v2>); author : G. Fort, P. Gach and E. Moulines
 
 In this repository, the subdirectory *ToyExample* contains the MATLAB codes for the toy example (section 4); the subdirectory *MNIST* contains the MATLAB codes for the more challenging example using the MNIST data set.
 
 - ---
 
 ## How to use the matlab files available in the subdirectory *ToyExample* ?
-read the html page [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIEM/README.html>); or a pdf description [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIEM/README.pdf>);
+read the html page [here](<https://github.com/gfort-lab/OpSiMorE/tree/master/FIEM/README.html>); or a pdf description [here](<https://github.com/gfort-lab/OpSiMorE/edit/master/FIEM/README.pdf>);
 
 
 
