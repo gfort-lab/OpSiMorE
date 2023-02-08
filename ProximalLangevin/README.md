@@ -216,4 +216,6 @@ figure(1);
   title(caption, 'FontSize', 10);
 
 ```
-<img src="/ProximalLangevin/JapanIC.png" alt="Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaIC.png" alt="India" width="25%" height="25%"><img src="/ProximalLangevin/France.png" alt="France" width="25%" height="25%">
+Obtained with PGdual, MAP.method_augmentation = 'orthogonal'
+
+<img src="/ProximalLangevin/JapanIC.png" alt="Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaIC.png" alt="India" width="25%" height="25%"><img src="/ProximalLangevin/FranceIC.png" alt="France" width="25%" height="25%">
