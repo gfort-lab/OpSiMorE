@@ -63,14 +63,14 @@ MAP.method_augmentation = 'orthogonal'; % could be 'invert'
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vectQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.975];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
 MCMC.gamma_init = 1e-7;
 MCMC.target_ratio = 0.25;
 
-outputPGdual = PGdual_github(data,MAP,MCMC,param);
+outputAlgo = PGdual_github(data,MAP,MCMC,param);
 ```
 
 ### ${\color{violet} \text{Pseudocode}}$  
@@ -103,7 +103,7 @@ MAP.lambdaO = 0.05;
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vectQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.975];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
@@ -111,7 +111,7 @@ MCMC.gamma_init = 1e-7;
 MCMC.target_ratio = 0.25;
 MCMC.covariance = 'identity'; % or 'invert' or 'orthogonal'
 
-outputGibbsPGdual = GibbsPGdual_github(data,MAP,MCMC,param);
+outputAlgo = GibbsPGdual_github(data,MAP,MCMC,param);
 ```
 
 
@@ -142,7 +142,7 @@ MAP.lambdaO = 0.05;
 
 param.T = length(data.Z);
 param.displayglobal = 0; % could be '1' for the display of  graphical controls during the run
-param.vectQ = [0.025 0.5 0.075];
+param.vectQ = [0.025 0.5 0.975];
 
 MCMC.chain_length = 1.2e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
@@ -150,7 +150,7 @@ MCMC.gamma_init = 1e-7;
 MCMC.target_ratio = 0.25;
 MCMC.covariance = 'identity'; % or 'invert' or 'orthogonal'
 
-outputPGdec = PGdec_github(data,MAP,MCMC,param);
+outputAlgo = PGdec_github(data,MAP,MCMC,param);
 ```
 
 ### ${\color{violet} \text{Pseudocode}}$  
@@ -169,3 +169,50 @@ All the data sets contain: data.Z, data.Zphi and MCMC.initial_point
 
 
 <img src="/ProximalLangevin/JapanDataSet1.png" alt="DataSet1,Japan" width="25%" height="25%"><img src="/ProximalLangevin/IndiaDataSet1.png" alt="DataSet1,India" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet2.png" alt="DataSet2,France" width="25%" height="25%"><img src="/ProximalLangevin/FranceDataSet1.png" alt="DataSet1,France" width="25%" height="25%">
+
+
+
+# ${\color{blue} \text{Example: display of the ouptput}}$
+```
+%% name "outputAlgo" the output structure of PGdual or GibbsPGdual ot GibbsPGdec.
+
+T = size(data.Z,1);
+Zdata = data.Z;
+Zphi = data.Zphi;
+
+Restim = (outputAlgo.R_quantiles(2,:))';
+Oestim = (outputAlgo.O_quantiles(2,:))';
+
+Qlower = outputAlgo.R_quantiles(1,:);
+Qupper = outputAlgo.R_quantiles(3,:);
+Median = outputAlgo.R_quantiles(2,:);
+
+intensite = Restim.*Zphi+Oestim;
+
+figure(1);                                          
+  clf; 
+
+% plot the data
+  plot(1:T,Zdata,'k-o','Linewidth',2);
+  hold on
+
+% plot the outlierless data
+  plot(1:T,Zdata-Oestim,'r','Linewidth',2);
+  grid on
+
+% plot confidence intervals for the outlierless data 
+  LowerOutlierless = Zdata'- outputAlgo.O_quantiles(1,:);
+  UpperOutlierless = Zdata'- outputAlgo.O_quantiles(3,:);
+  fill([1:T fliplr(1:T)],[LowerOutlierless fliplr(UpperOutlierless)],'m','EdgeColor','r','LineStyle','--','FaceAlpha',0.5);
+
+% plot confidence intervals for the reproduction number R 
+  yyaxis right
+  plot(1:T,outputAlgo.R_quantiles(2,:),'b-','Linewidth',1);
+  hold on
+  fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.5);
+
+% Caption of the figure 
+  caption = sprintf('India \n  R in [%1.3f, %1.3f]', Qlower(end),Qupper(end));
+  title(caption, 'FontSize', 10);
+
+```
