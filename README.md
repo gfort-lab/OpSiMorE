@@ -29,7 +29,7 @@ Here are the codes associated to the papers
   -  Credibility Interval Design for Covid19 Reproduction Number from nonsmooth Langevin-type Monte Carlo sampling, by H. Artigas, B. Pascal, G. Fort, P. Abry and N. Pustelnik. Accepted for publication in [EUSIPCO 2022](<https://hal.science/hal-03371837>) proceedings.
   -  Estimation et Intervalles de crédibilité pour le taux de reproduction de la Covid19 par échantillonnage Monte Carlo Langevin Proximal, by P. Abry, G. Fort, B. Pascal and N. Pustelnik. Accepted for publication in [GRETSI 2022](<https://hal.science/hal-03611891>) proceedings.
   - Credibility intervals for the reproduction number of the Covid-19 pandemic using Proximal Lanvevin samplers. by P. Abry, G. Fort, B. Pascal and N. Pustelnik. [Submitted](<https://hal.science/hal-03902144/>).
-  - Covid19 Reproduction Number: Credibility Intervals by Blockwise Proximal Monte Carlo samplers, by G. Fort, B. Pascal, P. Abry and N. Pustelnik. [Accepted in IEEE Trans Signal Processing, Feb 2023](<https://hal.science/hal-03611079>)
+  - Covid19 Reproduction Number: Credibility Intervals by Blockwise Proximal Monte Carlo samplers, by G. Fort, B. Pascal, P. Abry and N. Pustelnik. [Accepted for publication in IEEE Trans Signal Processing, Feb 2023](<https://hal.science/hal-03611079>)
   
   
   
