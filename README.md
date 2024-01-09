@@ -31,6 +31,10 @@ Here are the codes associated to the papers
   - Credibility intervals for the reproduction number of the Covid-19 pandemic using Proximal Lanvevin samplers. by P. Abry, G. Fort, B. Pascal and N. Pustelnik. Accepted for publication in [EUSIPCO 2023](<https://hal.science/hal-03902144/>).
   - Covid19 Reproduction Number: Credibility Intervals by Blockwise Proximal Monte Carlo samplers, by G. Fort, B. Pascal, P. Abry and N. Pustelnik. [Accepted for publication in IEEE Trans Signal Processing, Feb 2023](<https://hal.science/hal-03611079>)
   
-  
+  - ---
+
+# <h3 style="color:#ff0000"> Parameter estimation for the Covid19 Reproduction number</h3>
+Here are the codes associated to the paper
+  - Pandemic Intensity Estimation From Stochastic Approximation-Based Algorithms, by P. Abry, J. Chevallier, G. Fort and B. Pascal. Accepted for publication in [CAMSAP 2023](<https://hal.science/hal-04174245v2>) proceedings.
   
   
