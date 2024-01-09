@@ -60,6 +60,8 @@ A structure _data_ with fields
 - _Z_ : (T-2)x1, the sequence $Z_3, \cdots, Z_T$
 - _Phi_ : (T-2)x1, the sequence $\Phi_3, \cdots, \Phi_T$
 - Rinit : 2x1, the initial values $R_1$ and $R_2$
+- LambdaR : 1x1, the value of $\lambda_R$
+- LambdaO : 1x1, the value of $\lambda_O$ 
 
 A structure _MCMC_ with fields
 - _NbrMC_ : 1x1, number of MCMC iterations
