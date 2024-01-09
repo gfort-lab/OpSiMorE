@@ -52,7 +52,22 @@ $\pi_m$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\
 This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi$ and returns a Monte Carlo approximation for each expectation 
 
 > $$ {\tiny
-> \frac{1}{4} \int \sum_{t=3}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) \qquad \qquad  \int \sum_{t=3}^T |o_t| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) 
+>   I_R := \frac{1}{4} \int \sum_{t=3}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) \qquad \qquad   I_O := \int \sum_{t=3}^T |o_t| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) 
 > } $$
 
- ### ${\color{violet} \text{Output structures}}$
+### ${\color{violet} \text{Input structures}}$
+A structure _data_ with fields
+- _Z_ : (T-2)x1, the sequence $Z_3, \cdots, Z_T$
+- _Phi_ : (T-2)x1, the sequence $\Phi_3, \cdots, \Phi_T$
+- Rinit : 2x1, the initial values $R_1$ and $R_2$
+
+A structure _MCMC_ with fields
+- _NbrMC_ : 1x1, number of MCMC iterations
+-  _burnin_ : 1x1, length of the burnin period
+  
+### ${\color{violet} \text{Output structures}}$
+A structure _output_ with fields
+- _StatR_ : the Monte Carlo approximation of $\mathcal{I}_R$
+- _StatO_ : the Monte Carlo approximation of $\mathcal{I}_O$
+- _gammaR_ : step size for the proposal mechanism when sampling the R_t variables
+- _gammaO_ : step size for the proposal mechanism when sampling the O_t variables
