@@ -47,9 +47,12 @@ up to an additive constant. The support of the distribution is
 $\pi_m$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
 
 
+## ${\color{blue} \text{GibbsPGdual\\_nomixture}}$
 
 This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi$ and returns a Monte Carlo approximation for each expectation 
 
 > $$ {\tiny
 > \frac{1}{4} \int \sum_{t=3}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) \qquad \qquad  \int \sum_{t=3}^T |o_t| \ \  \mathrm{d} \pi(r_3,o_3, \cdots, r_T, o_T) 
-> } $$ 
+> } $$
+
+ ### ${\color{violet} \text{Output structures}}$
