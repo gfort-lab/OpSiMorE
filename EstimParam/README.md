@@ -10,7 +10,7 @@ two distributions are defined.
 A target distribution $\pi$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The log-density $\ln \pi$ is given by
 
 > $$ 
-> {\tiny \begin{split}
+> {\small \begin{split}
 > (R_1, O_1, \cdots, R_T, O_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
 > & - \frac{\lambda_R}{4} \sum_{t=1}^T | R_t - 2 R_{t-1} + R_{t-2} | + T \ln \lambda_R   \\
 > & - \lambda_O  \sum_{t=1}^T |O_t| + T \ln \lambda_O
@@ -20,7 +20,7 @@ A target distribution $\pi$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The lo
 up to an additive constant. The support of the distribution is  
 
 > $$
- {\tiny \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
+ {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
 $\pi$ depends on two positive parameters $\lambda_R$ and $\lambda_O$.
@@ -30,7 +30,7 @@ $\pi$ depends on two positive parameters $\lambda_R$ and $\lambda_O$.
 A target distribution $\pi_m$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
 
 >  $$ 
- {\tiny \begin{split} (R_1, O_1, B_1, \cdots, R_T, O_T, B_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
+ {\small \begin{split} (R_1, O_1, B_1, \cdots, R_T, O_T, B_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
 & - \frac{\lambda_R}{4} \sum_{t=1}^T | R_t - 2 R_{t-1} + R_{t-2} | + T \ln \lambda_R   \\
 & - \lambda_{O,0}  \sum_{t=1}^T (1-B_t) |O_t| + (T-\sum_{t=1}^T B_t) \ln \lambda_{O,0} \\
 & - \lambda_{O,1}  \sum_{t=1}^T B_t |O_t| + (\sum_{t=1}^T B_t) \ln \lambda_{O,1} \\
@@ -41,7 +41,7 @@ A target distribution $\pi_m$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0
 up to an additive constant. The support of the distribution is
 
 > $$
-> {\tiny \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
+> {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
 $\pi_m$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
@@ -51,7 +51,7 @@ $\pi_m$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\
 
 This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi$ and returns a Monte Carlo approximation for each expectation. The proposal mechanism depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
 
-> $$ {\tiny
+> $$ {\small
 >   I_R := \frac{1}{4} \int \sum_{t=1}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T) \qquad \qquad   I_O := \int \sum_{t=1}^T |o_t| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T) 
 > } $$
 
@@ -76,8 +76,8 @@ A structure _MCMC_ with fields
   
 ### ${\color{violet} \text{Output structures}}$
 A structure _output_ with fields
-- _StatR_ : the Monte Carlo approximation of $\mathcal{I}_R$
-- _StatO_ : the Monte Carlo approximation of $\mathcal{I}_O$
+- _StatR_ : the Monte Carlo approximation of $I_R$
+- _StatO_ : the Monte Carlo approximation of $I_O$
 - _GammaTildeR_ : step size for the proposal mechanism when sampling the second derivative of the R_t variables
 - _GammaO_ : step size for the proposal mechanism when sampling the O_t variables
 - _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $R_1, \cdots, R_T$ under the distribution $\pi$
