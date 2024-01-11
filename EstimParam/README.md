@@ -7,7 +7,7 @@ two distributions are defined.
 
 **Model "no mixture"** $\pi$ 
 
-A target distribution $\pi$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The log-density $\ln \pi$ is given by
+A target distribution $\pi(\cdot; \lambda_R,\lambda_O)$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The log-density $\ln \pi(\cdot; \lambda_R,\lambda_O)$ is given by
 
 > $$ 
 > {\small \begin{split}
@@ -17,17 +17,17 @@ A target distribution $\pi$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The lo
 \end{split} }
 > $$
 
-up to an additive constant. The support of the distribution is  
+up to an additive constant. The support of the distribution is the set $\mathcal{D}$ defined by
 
 > $$
  {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
-$\pi$ depends on two positive parameters $\lambda_R$ and $\lambda_O$.
+$\pi(\cdot; \lambda_R,\lambda_O)$ depends on two positive parameters $\lambda_R$ and $\lambda_O$.
 
 **Model "mixture"**  $\pi_m$
 
-A target distribution $\pi_m$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
+A target distribution $\pi_m(\cdot; \lambda_R,\lambda_{O,O},\lambda_{O,1},\omega)$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
 
 >  $$ 
  {\small \begin{split} (R_1, O_1, B_1, \cdots, R_T, O_T, B_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
@@ -38,22 +38,24 @@ A target distribution $\pi_m$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0
 \end{split}}
 > $$ 
 
-up to an additive constant. The support of the distribution is
+up to an additive constant. The support of the distribution is the set $\mathcal{D}_m$ defined by 
 
 > $$
 > {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
-$\pi_m$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
+$\pi_m(\cdot; \lambda_R,\lambda_{O,O},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
 
 
 ## ${\color{blue} \text{GibbsPGdual\\_nomixture}}$
 
-This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi$ and returns a Monte Carlo approximation for each expectation. The proposal mechanism depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
+This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi(\cdot; \lambda_R,\lambda_{O})$ and returns a Monte Carlo approximation for each expectation. The proposal mechanism depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
 
-> $$ {\small
->   I_R := \frac{1}{4} \int \sum_{t=1}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T) \qquad \qquad   I_O := \int \sum_{t=1}^T |o_t| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T) 
-> } $$
+ >$$ 
+ {\small \begin{split}  I_R(\lambda_R,\lambda_O) & := \frac{1}{4} \int_{\mathcal{D}} \ \sum_{t=1}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \   \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O) \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \\   
+ I_O(\lambda_R,\lambda_O) &:= \int_{\mathcal{D}} \  \sum_{t=1}^T |o_t| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O)  \  \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T.
+ \end{split}}
+ >$$
 
 ### ${\color{violet} \text{Input structures}}$
 A structure _data_ with fields
@@ -76,8 +78,8 @@ A structure _MCMC_ with fields
   
 ### ${\color{violet} \text{Output structures}}$
 A structure _output_ with fields
-- _StatR_ : the Monte Carlo approximation of $I_R$
-- _StatO_ : the Monte Carlo approximation of $I_O$
+- _StatR_ : the Monte Carlo approximation of $I_R(\lambda_R,\lambda_O)$
+- _StatO_ : the Monte Carlo approximation of $I_O(\lambda_R,\lambda_O)$
 - _GammaTildeR_ : step size for the proposal mechanism when sampling the second derivative of the R_t variables
 - _GammaO_ : step size for the proposal mechanism when sampling the O_t variables
 - _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $R_1, \cdots, R_T$ under the distribution $\pi$
@@ -87,3 +89,21 @@ A structure _output_ with fields
 - _lastsampleR_ : Tx1, the last MCMC sample R
 - _lastsampleO_ : Tx1, the last MCMC sample O
 - _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations 
+
+
+
+## ${\color{blue} \text{FullBayesian\\_nomixture}}$
+
+This MATLAB code runs a Metropolis-within-Gibbs sampler which provides a Monte Carlo approximation of the distribution
+
+$$
+ {\small (R_1,O_1, \cdots, R_T,O_T) \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O}
+ $$
+
+### ${\color{violet} \text{Input structures}}$
+A structure _data_ with fields
+- _Z_ : Tx1, the sequence $Z_1, \cdots, Z_T$
+- _Phi_ : Tx1, the sequence $\Phi_1, \cdots, \Phi_T$
+- Rinit : 2x1, the initial values $R_{-1}$ and $R_0$
+
+### ${\color{violet} \text{Output structures}}$
