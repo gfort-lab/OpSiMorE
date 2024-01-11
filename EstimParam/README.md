@@ -91,6 +91,85 @@ A structure _output_ with fields
 - _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations 
 
 
+### ${\color{violet} \text{Example}}$
+(see [camsap23 paper](https://hal.science/hal-04174245v2)) for details on data.Z, data.Phi, data.Rinit
+```
+%% load data.Z, data.Phi, data.Rinit and MCMC.initial_pointR, MCMC.initial_pointO
+% data.Z is part of a time series downloaded from JHU repository
+% data.Phi is built from this time series 
+% data.Rinit is built from this time series 
+% The initial value MCMC.initial_pointR of the vector R was obtained from: 
+    % a code by [B. Pascal](https://bpascal-fr.github.io/), which computes the MAP of \pi  given a set of values for (\lambda_R, \lambda_O)
+    % Here, $\lambda_R$ and $\lambda_O$ are fixed to 3.5 std(data.Z) and 0.05 respectively.
+% The initial valueMCMC.initial_pointO  of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
+
+load FranceDataSet1.mat
+
+data.LambdaR = 3.5*std(data.Z);
+data.LambdaO = 0.05;
+
+MCMC.Qvec= [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
+
+MCMC.chain_length = 1e7;
+MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
+
+MCMC.GammaTildeR = 1e-12;
+MCMC.GammaO = 1e3;
+MCMC.target_ratioAR = 0.25;
+
+
+
+[output] = GibbsPGdual_nomixture(data,MCMC);
+
+% Estimates of the reproduction number:
+% - point estimate via the expectation
+% - credibility intervals at level 80%, 90% and 95%
+figure(1)
+clf 
+T = size(data.Z,1);
+plot(output.empirical_meanR,'k','LineWidth',2);
+hold on
+grid on
+Qlower = output.quantilesR(1,:);
+Qupper = output.quantilesR(7,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.2);
+Qlower = output.quantilesR(2,:);
+Qupper = output.quantilesR(6,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.4);
+Qlower = output.quantilesR(3,:);
+Qupper = output.quantilesR(5,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.6);
+plot(-1,data.Rinit(1),'kd','MarkerSize',4,'MarkerFaceColor','k');
+plot(0,data.Rinit(2),'kd','MarkerSize',4,'MarkerFaceColor','k');
+yyaxis right
+plot(1:T,data.Z,'-o','Color',[1 0 0 0.2],'MarkerSize',2);
+caption = sprintf('France');
+title(caption,'FontSize',10);
+ax = gca;
+ax.YAxis(1).Color = 'b';
+ax.YAxis(2).Color = 'r';
+
+% Estimates of the denoised data Z_t-O_t, from
+% - a point estimate of O, via the expectation
+% - credibility intervals at level 80%, 90% and 95%
+figure(2)
+clf 
+plot(1:T,data.Z-output.empirical_meanO,'r','LineWidth',2);
+hold on
+grid on
+plot(1:T,data.Z,'k--o','MarkerSize',2);
+Qlower = data.Z'-output.quantilesO(1,:);
+Qupper = data.Z'-output.quantilesO(7,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'m','EdgeColor','m','LineStyle','--','FaceAlpha',0.2);
+Qlower = data.Z'-output.quantilesO(2,:);
+Qupper = data.Z'-output.quantilesO(6,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'r','EdgeColor','r','LineStyle','--','FaceAlpha',0.4);
+Qlower = data.Z'-output.quantilesO(3,:);
+Qupper = data.Z'-output.quantilesO(5,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'r','EdgeColor','r','LineStyle','--','FaceAlpha',0.6);
+caption = sprintf('France');
+title(caption,'FontSize',10);
+'''
 
 ## ${\color{blue} \text{FullBayesian\\_nomixture}}$
 
