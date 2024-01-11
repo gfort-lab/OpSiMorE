@@ -94,12 +94,14 @@ A structure _output_ with fields
 
 ## ${\color{blue} \text{FullBayesian\\_nomixture}}$
 
-This MATLAB code runs a Metropolis-within-Gibbs sampler which provides a Monte Carlo approximation of the distributions
+This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution proportional to $(R_1,O_1, \cdots, R_T,O_T, \lambda_R, \lambda_0) \mapsto \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O)$ on $\mathcal{D} \times \mathbb{R}_{>0} \times \mathbb{R}_{>0}$. It returns a Monte Carlo approximation of quantiles and expectation of the distributions 
 
 $$
  {\small \begin{split} (R_1,O_1, \cdots, R_T,O_T) & \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O \qquad \qquad \text{on $\mathcal{D}$} \\
- (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty) \end{split}}
+ (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty); \end{split}}
  $$
+
+and a Monte Carlo approximatiuon of the second distribution.
 
 ### ${\color{violet} \text{Input structures}}$
 A structure _data_ with fields
