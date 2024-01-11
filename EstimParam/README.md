@@ -132,10 +132,13 @@ A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in **Gib
 ### ${\color{violet} \text{Example}}$
 ```
 %% load data.Z, data.Phi, data.Rinit and MCMC.initial_pointR, MCMC.initial_pointO
-% The initial value of the vector R was obtained from: 
+% data.Z is part of a time series downloaded from JHU repository (see [camsap23 paper](https://hal.science/hal-04174245v2))
+% data.Phi is built from this time series (see [camsap23 paper](https://hal.science/hal-04174245v2))
+% data.Rinit is built from this time series (see [camsap23 paper](https://hal.science/hal-04174245v2))
+% The initial value MCMC.initial_pointR of the vector R was obtained from: 
     % a code by [B. Pascal](https://bpascal-fr.github.io/), which computes the MAP of \pi  given a set of values for (\lambda_R, \lambda_O)
     % Here, $\lambda_R$ and $\lambda_O$ are fixed to 3.5 std(data.Z) and 0.05 respectively.
-% The initial value of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
+% The initial valueMCMC.initial_pointO  of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
 load FranceDataSet1.mat
 
 MCMC.Qvec= [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
