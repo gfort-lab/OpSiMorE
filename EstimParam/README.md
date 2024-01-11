@@ -103,11 +103,11 @@ This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution
  It returns a Monte Carlo approximation of quantiles and expectation of the distributions 
 
 > $$
- {\small \begin{split} (R_1,O_1, \cdots, R_T,O_T) & \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O \qquad \qquad \text{on $\mathcal{D}$} \\
- (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty); \end{split}}
- > $$
+ {\small \begin{align} (R_1,O_1, \cdots, R_T,O_T) & \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O \qquad \qquad \text{on $\mathcal{D}$}   \\
+ (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty);   \end{align}}
+ > $$ 
 
-and a Monte Carlo approximation of the second distribution.
+and a Monte Carlo approximation of the second distribution 
 
 ### ${\color{violet} \text{Input structures}}$
 A structure _data_ with fields
