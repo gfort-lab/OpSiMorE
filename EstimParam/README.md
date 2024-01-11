@@ -1,4 +1,4 @@
-Given
+*Given
 - T observations $Z_1, \cdots, Z_T$ taking values in $\mathbb{Z}_{\geq 0}$
 - T mean values $\Phi_1, \cdots, \Phi_T$ taking values in $\mathbb{R}_{\geq 0}$
 - Two initial values $R_{-1}, R_0$ for the reproduction number  taking values in $\mathbb{R}_{>0}$
@@ -115,12 +115,12 @@ A structure _data_ with fields
 - _Phi_ : Tx1, the sequence $\Phi_1, \cdots, \Phi_T$
 - Rinit : 2x1, the initial values $R_{-1}$ and $R_0$
 
-A structure _MCMC_ with the same fields as in *GibbsPGdual\_nomixture*, and in addition
+A structure _MCMC_ with the same fields as in **GibbsPGdual\_nomixture**, and in addition
 - _initial_pointLR_ : 1x1, initial value of the $\lambda_R$ chain
 - _initial_pointLO_ : 1x1, initial value of the $\lambda_O$ chain
 
 ### ${\color{violet} \text{Output structures}}$
-A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in *GibbsPGdual\_nomixture* and
+A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in **GibbsPGdual\_nomixture** and
 - _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the  distribution $\pi^{(1)}$ 
 - _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi^{(1)}$
 - _empirical_meanLR_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_R$ under the  distribution $\pi^{(2)}$ 
