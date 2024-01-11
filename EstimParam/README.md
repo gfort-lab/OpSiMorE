@@ -63,9 +63,9 @@ The proposal mechanism depends on design parameters: they are adapted during the
 A structure _data_ with fields
 - _Z_ : Tx1, the sequence $Z_1, \cdots, Z_T$
 - _Phi_ : Tx1, the sequence $\Phi_1, \cdots, \Phi_T$
-- Rinit : 2x1, the initial values $R_{-1}$ and $R_0$
-- LambdaR : 1x1, the value of $\lambda_R$
-- LambdaO : 1x1, the value of $\lambda_O$ 
+- _Rinit_ : 2x1, the initial values $R_{-1}$ and $R_0$
+- _LambdaR_ : 1x1, the value of $\lambda_R$
+- _LambdaO_ : 1x1, the value of $\lambda_O$ 
 
 A structure _MCMC_ with fields
 - _chain\_length_ : 1x1, number of MCMC iterations; default value 1e7
