@@ -70,8 +70,8 @@ A structure _MCMC_ with fields
 -  _chain\_burnin_ : 1x1, length of the burnin period; default value 0.5*1e7
 -  _initial\_pointR_ : Tx1, initial value of the R chain
 -  _initial\_pointO_ : Tx1, initial value of the O chain
--  _GammaO_: 1x1, initial value of the step size when proposing a candidate for O; default value 1e3
--  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of R; default value 1e-12
+-  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
+-  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of the $R_t$ variables; default value 1e-12
 -  _target\_ratioAR_ : 1x1, targeted acceptance ratio during the adaptation phase; default value 0.25
 - _Qvec_ : vector of order of quantiles; default value (0.025 0.05 0.5 0.95 0.975)
 
@@ -80,12 +80,12 @@ A structure _MCMC_ with fields
 A structure _output_ with fields
 - _StatR_ : the Monte Carlo approximation of $I_R(\lambda_R,\lambda_O)$
 - _StatO_ : the Monte Carlo approximation of $I_O(\lambda_R,\lambda_O)$
-- _GammaTildeR_ : step size for the proposal mechanism when sampling the second derivative of the R_t variables
-- _GammaO_ : step size for the proposal mechanism when sampling the O_t variables
-- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $R_1, \cdots, R_T$ under the distribution $\pi$
-- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $O_1, \cdots, O_T$ under the distribution $\pi$
-- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the distribution $\pi$
-- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the distribution $\pi$
+- _GammaTildeR_ : step size when proposing a candidate for the second derivative of the R_t variables
+- _GammaO_ : step size when proposing a candidae for the O_t variables
+- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 - _lastsampleR_ : Tx1, the last MCMC sample R
 - _lastsampleO_ : Tx1, the last MCMC sample O
 - _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations 
@@ -103,8 +103,8 @@ This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution
  It returns a Monte Carlo approximation of quantiles and expectation of the distributions 
 
 > $$
- {\small \begin{align} (R_1,O_1, \cdots, R_T,O_T) & \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O \qquad \qquad \text{on $\mathcal{D}$}   \\
- (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty);   \end{align}}
+ {\small \begin{align} \pi^{(1)}: \quad (R_1,O_1, \cdots, R_T,O_T) & \mapsto \int_0^{\infty} \int_0^\infty   \  \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d} \lambda_R \ \mathrm{d} \lambda_O \qquad \qquad \text{on $\mathcal{D}$}   \\
+\pi^{(2)}: \quad  (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty);   \end{align}}
  > $$ 
 
 and a Monte Carlo approximation of the second distribution 
@@ -115,4 +115,16 @@ A structure _data_ with fields
 - _Phi_ : Tx1, the sequence $\Phi_1, \cdots, \Phi_T$
 - Rinit : 2x1, the initial values $R_{-1}$ and $R_0$
 
+A structure _MCMC_ with the same fields as in *GibbsPGdual\_nomixture*, and in addition
+- _initial_pointLR_ : 1x1, initial value of the $\lambda_R$ chain
+- _initial_pointLO_ : 1x1, initial value of the $\lambda_O$ chain
+
 ### ${\color{violet} \text{Output structures}}$
+A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in *GibbsPGdual\_nomixture* and
+- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the  distribution $\pi^{(1)}$ 
+- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi^{(1)}$
+- _empirical_meanLR_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_R$ under the  distribution $\pi^{(2)}$ 
+- _empirical_meanLO_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_O$ under the  distribution $\pi^{(2)}$
+- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi^{(1)}$
+- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi^{(2)}$
+- _Lambdachain_ : 2xL, the bivariate Markov chain approximating $\pi^{(2)}$; the samples from the burnin period are discarded so that L = MCMC.chain\_length-MCMC.chain\_burnin.
