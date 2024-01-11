@@ -27,7 +27,7 @@ $\pi(\cdot; \lambda_R,\lambda_O)$ depends on two positive parameters $\lambda_R$
 
 **Model "mixture"**  $\pi_m$
 
-A target distribution $\pi_m(\cdot; \lambda_R,\lambda_{O,O},\lambda_{O,1},\omega)$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
+A target distribution $\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
 
 >  $$ 
  {\small \begin{split} (R_1, O_1, B_1, \cdots, R_T, O_T, B_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
@@ -44,7 +44,7 @@ up to an additive constant. The support of the distribution is the set $\mathcal
 > {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
-$\pi_m(\cdot; \lambda_R,\lambda_{O,O},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
+$\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
 
 
 ## ${\color{blue} \text{GibbsPGdual\\_nomixture}}$
@@ -53,7 +53,7 @@ This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution
 
  >$$ 
  {\small \begin{split}  I_R(\lambda_R,\lambda_O) & := \frac{1}{4} \int_{\mathcal{D}} \ \sum_{t=1}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \   \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O) \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \\   
- I_O(\lambda_R,\lambda_O) &:= \int_{\mathcal{D}} \  \sum_{t=1}^T |o_t| \ \  \mathrm{d} \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O)  \  \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T.
+ I_O(\lambda_R,\lambda_O) &:= \int_{\mathcal{D}} \  \sum_{t=1}^T |o_t| \ \  \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O)  \  \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T.
  \end{split}}
  >$$
 
