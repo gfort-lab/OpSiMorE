@@ -1,4 +1,4 @@
-*Given
+Given
 - T observations $Z_1, \cdots, Z_T$ taking values in $\mathbb{Z}_{\geq 0}$
 - T mean values $\Phi_1, \cdots, \Phi_T$ taking values in $\mathbb{R}_{\geq 0}$
 - Two initial values $R_{-1}, R_0$ for the reproduction number  taking values in $\mathbb{R}_{>0}$
@@ -128,3 +128,88 @@ A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in **Gib
 - _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi^{(1)}$
 - _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi^{(2)}$
 - _Lambdachain_ : 2xL, the bivariate Markov chain approximating $\pi^{(2)}$; the samples from the burnin period are discarded so that L = MCMC.chain\_length-MCMC.chain\_burnin.
+
+### ${\color{violet} \text{Example}}$
+```
+%% load data.Z, data.Phi, data.Rinit and MCMC.initial_pointR, MCMC.initial_pointO
+% The initial value of the vector R was obtained from: 
+    % a code by [B. Pascal](https://bpascal-fr.github.io/), which computes the MAP of \pi  given a set of values for (\lambda_R, \lambda_O)
+    % Here, $\lambda_R$ and $\lambda_O$ are fixed to 3.5 std(data.Z) and 0.05 respectively.
+% The initial value of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
+load FranceDataSet1.mat
+
+MCMC.Qvec= [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
+
+MCMC.chain_length = 1e7;
+MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
+
+MCMC.GammaTildeR = 1e-12;
+MCMC.GammaO = 1e3;
+MCMC.target_ratioAR = 0.25;
+
+MCMC.initial_pointLR = 3.5*std(data.Z);
+MCMC.initial_pointLO = 0.05; 
+
+[outputFB] = FullBayesian_nomixture(data,MCMC);
+
+% Estimates of the reproduction number:
+% - point estimate via the expectation
+% - credibility intervals at level 80%, 90% and 95%
+figure(1)
+clf 
+T = size(data.Z,1);
+plot(outputFB.empirical_meanR,'k','LineWidth',2);
+hold on
+grid on
+Qlower = outputFB.quantilesR(1,:);
+Qupper = outputFB.quantilesR(7,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.2);
+Qlower = outputFB.quantilesR(2,:);
+Qupper = outputFB.quantilesR(6,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.4);
+Qlower = outputFB.quantilesR(3,:);
+Qupper = outputFB.quantilesR(5,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'b','EdgeColor','b','LineStyle','--','FaceAlpha',0.6);
+plot(-1,data.Rinit(1),'kd','MarkerSize',4,'MarkerFaceColor','k');
+plot(0,data.Rinit(2),'kd','MarkerSize',4,'MarkerFaceColor','k');
+yyaxis right
+plot(1:T,data.Z,'-o','Color',[1 0 0 0.2],'MarkerSize',2);
+caption = sprintf('France');
+title(caption,'FontSize',10);
+ax = gca;
+ax.YAxis(1).Color = 'b';
+ax.YAxis(2).Color = 'r';
+
+% Estimates of the denoised data Z_t-O_t, from
+% - a point estimate of O, via the expectation
+% - credibility intervals at level 80%, 90% and 95%
+figure(2)
+clf 
+plot(1:T,data.Z-outputFB.empirical_meanO,'r','LineWidth',2);
+hold on
+grid on
+plot(1:T,data.Z,'k--o','MarkerSize',2);
+Qlower = data.Z'-outputFB.quantilesO(1,:);
+Qupper = data.Z'-outputFB.quantilesO(7,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'m','EdgeColor','m','LineStyle','--','FaceAlpha',0.2);
+Qlower = data.Z'-outputFB.quantilesO(2,:);
+Qupper = data.Z'-outputFB.quantilesO(6,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'r','EdgeColor','r','LineStyle','--','FaceAlpha',0.4);
+Qlower = data.Z'-outputFB.quantilesO(3,:);
+Qupper = data.Z'-outputFB.quantilesO(5,:);
+fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'r','EdgeColor','r','LineStyle','--','FaceAlpha',0.6);
+caption = sprintf('France');
+title(caption,'FontSize',10);
+
+
+% Histogram of the LambdaR, LambdaO
+figure(3)
+clf
+subplot(2,1,1);
+histogram(outputFB.Lambdachain(1,:),'Normalization','pdf');
+title('distribution of \lambda_R under \pi^{(2)}')
+subplot(2,1,2);
+histogram(outputFB.Lambdachain(2,:),'Normalization','pdf');
+title('distribution of  \lambda_0 under \pi^{(2)}')
+'''
+
