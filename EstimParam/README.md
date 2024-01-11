@@ -1,4 +1,4 @@
-Given
+ Given
 - T observations $Z_1, \cdots, Z_T$ taking values in $\mathbb{Z}_{\geq 0}$
 - T mean values $\Phi_1, \cdots, \Phi_T$ taking values in $\mathbb{R}_{\geq 0}$
 - Two initial values $R_{-1}, R_0$ for the reproduction number  taking values in $\mathbb{R}_{>0}$
@@ -93,6 +93,7 @@ A structure _output_ with fields
 
 ### ${\color{violet} \text{Example}}$
 (see [camsap23 paper](https://hal.science/hal-04174245v2)) for details on data.Z, data.Phi, data.Rinit
+
 ```
 %% load data.Z, data.Phi, data.Rinit and MCMC.initial_pointR, MCMC.initial_pointO
 % data.Z is part of a time series downloaded from JHU repository
@@ -116,8 +117,6 @@ MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
 MCMC.GammaTildeR = 1e-12;
 MCMC.GammaO = 1e3;
 MCMC.target_ratioAR = 0.25;
-
-
 
 [output] = GibbsPGdual_nomixture(data,MCMC);
 
@@ -169,7 +168,8 @@ Qupper = data.Z'-output.quantilesO(5,:);
 fill([1:T fliplr(1:T)],[Qlower fliplr(Qupper)],'r','EdgeColor','r','LineStyle','--','FaceAlpha',0.6);
 caption = sprintf('France');
 title(caption,'FontSize',10);
-'''
+```  
+
 
 ## ${\color{blue} \text{FullBayesian\\_nomixture}}$
 
@@ -295,5 +295,5 @@ title('distribution of \lambda_R under \pi^{(2)}')
 subplot(2,1,2);
 histogram(outputFB.Lambdachain(2,:),'Normalization','pdf');
 title('distribution of  \lambda_0 under \pi^{(2)}')
-'''
+```
 
