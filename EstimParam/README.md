@@ -294,6 +294,6 @@ histogram(outputFB.Lambdachain(1,:),'Normalization','pdf');
 title('distribution of \lambda_R under \pi^{(2)}')
 subplot(2,1,2);
 histogram(outputFB.Lambdachain(2,:),'Normalization','pdf');
-title('distribution of  \lambda_0 under \pi^{(2)}')
+title('distribution of  \lambda_O under \pi^{(2)}')
 ```
 
