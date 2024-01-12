@@ -67,7 +67,7 @@ end
 if isfield(MCMC,'GammaO')
     GammaO = MCMC.GammaO;    % 1 x 1
 else 
-    GammaO = 1e-7;
+    GammaO = 1e3;
 end
 if isfield(MCMC,'GammaTildeR')
     GammaTildeR = MCMC.GammaTildeR;    % 1 x 1
