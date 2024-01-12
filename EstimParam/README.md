@@ -75,7 +75,7 @@ A structure _MCMC_ with fields
 -  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
 -  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of the $R_t$ variables; default value 1e-12
 -  _target\_ratioAR_ : 1x1, targeted acceptance ratio during the adaptation phase; default value 0.25
-- _Qvec_ : vector of order of quantiles; default value (0.025 0.05 0.1 0.5 0.9 0.95 0.975)
+- _Qvec_ : vector of order of quantiles; may be empty by setting _MCMC.Qvec = []_. Default value (0.025 0.05 0.1 0.5 0.9 0.95 0.975)
 
   
 ### ${\color{violet} \text{Output structures}}$
@@ -89,7 +89,8 @@ A structure _output_ with fields
 - _lastsampleR_ : Tx1, the last MCMC sample R
 - _lastsampleO_ : Tx1, the last MCMC sample O
 - _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations
-and, if _MCMC.Qvec_ is ,not empty,
+  
+and, if _MCMC.Qvec_ is not empty,
 - _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 - _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 
