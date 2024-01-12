@@ -23,7 +23,7 @@ up to an additive constant. The support of the distribution is the set $\mathcal
  {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
-$\pi(\cdot; \lambda_R,\lambda_O)$ depends on two positive parameters $\lambda_R$ and $\lambda_O$.
+$\pi(\cdot; \lambda_R,\lambda_O)$ depends on two positive parameters $\lambda_R$ and $\lambda_O$, and two initial values $R_{-1}, R_0$.
 
 **Model "mixture"**  $\pi_m$
 
@@ -44,7 +44,7 @@ up to an additive constant. The support of the distribution is the set $\mathcal
 > {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
 > $$
 
-$\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$; and a weight $\omega \in (0,1)$.
+$\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$, a weight $\omega \in (0,1)$, and two initial values $R_{-1}, R_0$.
 
 
 ## ${\color{blue} \text{GibbsPGdual\\_nomixture}}$
@@ -84,8 +84,8 @@ A structure _output_ with fields
 - _StatO_ : the Monte Carlo approximation of $I_O(\lambda_R,\lambda_O)$
 - _GammaTildeR_ : step size when proposing a candidate for the second derivative of the R_t variables
 - _GammaO_ : step size when proposing a candidae for the O_t variables
-- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution of $\pi(\cdot; \lambda_R,\lambda_0)$
-- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution $\pi(\cdot; \lambda_R,\lambda_0)$
+- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi(\cdot; \lambda_R,\lambda_0)$
 - _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 - _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 - _lastsampleR_ : Tx1, the last MCMC sample R
@@ -188,7 +188,7 @@ This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution
 \pi^{(2)}: \quad  (\lambda_R, \lambda_O) & \mapsto \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \qquad \qquad  \text{on}  \quad (0, \infty) \times (0,\infty);   \end{align}}
  > $$ 
 
-and a Monte Carlo approximation of the second distribution 
+and a Monte Carlo approximation of the distribution $\pi^{(2)}$.
 
 ### ${\color{violet} \text{Input structures}}$
 A structure _data_ with fields
