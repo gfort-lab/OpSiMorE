@@ -139,7 +139,8 @@ StoreLRchain(:,1) = LambdaRcurrent;
 StoreLOchain = zeros(1,NbrMC+1);
 StoreLOchain(:,1) = LambdaOcurrent;
 
-
+% Sample i.i.d. gamma variables with parameters ((T+1),1).
+RndGamma = gamrnd((T+1)*ones(NbrMC,2), ones(NbrMC,2));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Iterate a Metropolis-within-Gibbs algorithm
@@ -224,9 +225,9 @@ for nn=1:NbrMC
         
 
     %% Sample the LamdbaR and LambdaO chains
-    LambdaRcurrent = gamrnd(T+1,1/StatRcurrent);
-    LambdaOcurrent = gamrnd(T+1,1/StatOcurrent);
-    
+    aux = RndGamma(nn,:)./[StatRcurrent StatOcurrent];
+    LambdaRcurrent = aux(1);
+    LambdaOcurrent = aux(2);
     StatLRcurrent = T*log(LambdaRcurrent);
     StatLOcurrent = T*log(LambdaOcurrent);
 
