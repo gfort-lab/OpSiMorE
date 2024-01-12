@@ -86,11 +86,12 @@ A structure _output_ with fields
 - _GammaO_ : step size when proposing a candidae for the O_t variables
 - _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution $\pi(\cdot; \lambda_R,\lambda_0)$
 - _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi(\cdot; \lambda_R,\lambda_0)$
-- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
-- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 - _lastsampleR_ : Tx1, the last MCMC sample R
 - _lastsampleO_ : Tx1, the last MCMC sample O
-- _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations 
+- _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations
+and, if _MCMC.Qvec_ is ,not empty,
+- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
 
 
 ### ${\color{violet} \text{Example}}$
