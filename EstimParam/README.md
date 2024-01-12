@@ -299,3 +299,18 @@ histogram(outputFB.Lambdachain(2,:),'Normalization','pdf');
 title('distribution of  \lambda_O under \pi^{(2)}')
 ```
 
+
+## ${\color{blue} \text{SAEM\\_nomixture}}$
+This MATLAB code runs a _Stochastic Approximation Expectation Maximization_ (SAEM) algorithm (see Section 3 in [camsap23 paper](https://hal.science/hal-04174245v2), and references therein) in order to solve the optimization problem
+
+>$$
+{\small  \mathrm{argmax}  \int_{\mathcal{D}} \ \pi(R_1,O_1, \cdots, R_T,O_T; \lambda_R, \lambda_O) \ \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T  \qquad (\lambda_R, \lambda_O) \in (0,\infty) \times (0, \infty).}
+>$$
+
+SAEM is an iterative algorithm: **SAEM\_nomixture** returns a sequence $\\{ (\lambda_R^k, \lambda_O^k), k \geq 0 \\}$ of parameters converging to a solution.
+
+
+### ${\color{violet} \text{Input structures}}$
+
+
+### ${\color{violet} \text{Output structures}}$
