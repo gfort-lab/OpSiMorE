@@ -56,7 +56,7 @@ end
 if isfield(MCMC,'GammaO')
     GammaO = MCMC.GammaO;    % 1 x 1
 else 
-    GammaO = 1e-7;
+    GammaO = 1e3;
 end
 if isfield(MCMC,'GammaTildeR')
     GammaTildeR = MCMC.GammaTildeR;    % 1 x 1
@@ -243,15 +243,21 @@ auxOchain = StoreOchain(:,burnin+1:NbrMC+1);
 output.empirical_meanR = mean(auxRchain,2);
 output.empirical_meanO = mean(auxOchain,2);
 
-% Some quantiles, for each component of the R and O chains (burnin phase, discarded)
-MatrixQuantileR = zeros(length(vectQ),T);   
-MatrixQuantileO = zeros(length(vectQ),T);
-for tt=1:T
-    MatrixQuantileR(:,tt) = quantile(auxRchain(tt,:),vectQ');  % length(vectQ) x 1
-    MatrixQuantileO(:,tt) = quantile(auxOchain(tt,:),vectQ');  % length(vectQ) x 1
-end
-output.quantilesR = MatrixQuantileR;
-output.quantilesO = MatrixQuantileO;
+
+
+if length(vectQ)>0,
+    % Some quantiles, for each component of the R and O chains (burnin phase, discarded)
+    MatrixQuantileR = zeros(length(vectQ),T);   
+    MatrixQuantileO = zeros(length(vectQ),T);
+        for tt=1:T
+            MatrixQuantileR(:,tt) = quantile(auxRchain(tt,:),vectQ');  % length(vectQ) x 1
+            MatrixQuantileO(:,tt) = quantile(auxOchain(tt,:),vectQ');  % length(vectQ) x 1
+        end
+    output.quantilesR = MatrixQuantileR;
+    output.quantilesO = MatrixQuantileO;
+end;
+
+
 
 % The last sample of the R and O chains
 output.lastsampleR = Rcurrent;  % T x 1
