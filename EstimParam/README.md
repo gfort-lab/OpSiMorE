@@ -75,7 +75,7 @@ A structure _MCMC_ with fields
 -  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
 -  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of the $R_t$ variables; default value 1e-12
 -  _target\_ratioAR_ : 1x1, targeted acceptance ratio during the adaptation phase; default value 0.25
-- _Qvec_ : vector of order of quantiles; default value (0.025 0.05 0.5 0.95 0.975)
+- _Qvec_ : vector of order of quantiles; default value (0.025 0.05 0.1 0.5 0.9 0.95 0.975)
 
   
 ### ${\color{violet} \text{Output structures}}$
