@@ -30,12 +30,7 @@ else
     burnin  = ceil(0.5*NbrMC);
 end
 
-% Quantiles
-if isfield(MCMC,'Qvec')
-    vectQ = MCMC.Qvec; 
-else 
-    vectQ = [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
-end
+
 
 % Initial point of the chain, for R
 if isfield(MCMC,'initial_pointR')
@@ -65,13 +60,24 @@ else
 end
 
 % Adaptation of GammaTildeR and GammaO
-frequency = 1e4;
+if isfield(MCMC,'adapt_frequency')
+    frequency = MCMC.adapt_frequency;    % 1 x 1
+else 
+    frequency = 1e4; 
+end
 if isfield(MCMC,'target_ratioAR')
     ratioAR = MCMC.target_ratioAR;    % 1 x 1
 else 
     ratioAR = 0.25; 
 end
 
+
+% Quantiles
+if isfield(MCMC,'Qvec')
+    vectQ = MCMC.Qvec; 
+else 
+    vectQ = [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
+end
 
 % Define the shift 
 shift = zeros(T,1);
@@ -229,13 +235,19 @@ end
 %%%%%%%%%%
 %% Output
 %%%%%%%%%%
-% The Gamma parameters 
-output.GammaTildeR = GammaTildeR;
-output.GammaO = GammaO;
+% Display a wrning if the acceptance rate is to low
+if ((globalARrateO/NbrMC)<=0.8*MCMC.target_ratioAR)
+    sprintf('In GibbsPGdual_nomixture: the acceptance rate is low')
+end
+
 
 % The Monte Carlo approximation of some expectations
 output.StatR =  mean(StoreStatR(1,burnin+1:NbrMC+1));
 output.StatO =   mean(StoreStatO(1,burnin+1:NbrMC+1));
+
+% The Gamma parameters 
+output.GammaTildeR = GammaTildeR;
+output.GammaO = GammaO;
 
 % The empirical mean of the R and O chains (burnin phase, discarded)
 auxRchain = StoreRchain(:,burnin+1:NbrMC+1);
@@ -243,7 +255,12 @@ auxOchain = StoreOchain(:,burnin+1:NbrMC+1);
 output.empirical_meanR = mean(auxRchain,2);
 output.empirical_meanO = mean(auxOchain,2);
 
+% The last sample of the R and O chains
+output.lastsampleR = Rcurrent;  % T x 1
+output.lastsampleO = Ocurrent;  % T x 1
 
+% The successive values of LogPi
+output.LogPi = StoreLogPi;
 
 if length(vectQ)>0,
     % Some quantiles, for each component of the R and O chains (burnin phase, discarded)
@@ -259,9 +276,3 @@ end;
 
 
 
-% The last sample of the R and O chains
-output.lastsampleR = Rcurrent;  % T x 1
-output.lastsampleO = Ocurrent;  % T x 1
-
-% The successive values of LogPi
-output.LogPi = StoreLogPi;
