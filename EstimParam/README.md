@@ -238,6 +238,7 @@ MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
 MCMC.GammaTildeR = 1e-12;
 MCMC.GammaO = 1e3;
 MCMC.target_ratioAR = 0.25;
+MCMC.adapt_frequency = 1e4;
 
 MCMC.initial_pointLR = 3.5*std(data.Z);
 MCMC.initial_pointLO = 0.05; 
@@ -344,3 +345,62 @@ The _MCMC_structure with fields
 
 
 ### ${\color{violet} \text{Output structures}}$
+A structure _output_ with fields
+- _LambdaRpath_: 1xSAEM.NbrIter, the $\lambda_R$ sequence produced by SAEM
+- _LambdaOpath_: 1xSAEM.NbrIter, the $\lambda_O$ sequence produced by SAEM
+- _GammaTildeRpath_: 1xSAEM.NbrIter, the sequence of  parameters $\gamma_{\tilde R}$ used in the MCMC chain at each iteration of SAEM
+- _GammaOpath_: 1xSAEM.NbrIter, the sequence of parameters $\gamma_O$ used in the MCMC chain at each iteration of SAEM
+
+
+### ${\color{violet} \text{Example}}$
+(see [camsap23 paper](https://hal.science/hal-04174245v2)) for details on data.Z, data.Phi, data.Rinit
+```
+%% load data.Z, data.Phi, data.Rinit and MCMC.initial_pointR, MCMC.initial_pointO
+% data.Z is part of a time series downloaded from JHU repository
+% data.Phi is built from this time series 
+% data.Rinit is built from this time series 
+% The initial value MCMC.initial_pointR of the vector R was obtained from: 
+    % a code by [B. Pascal](https://bpascal-fr.github.io/), which computes the MAP of \pi  given a set of values for (\lambda_R, \lambda_O)
+    % Here, $\lambda_R$ and $\lambda_O$ are fixed to 3.5 std(data.Z) and 0.05 respectively.
+% The initial value MCMC.initial_pointO  of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
+
+load FranceDataSet1.mat
+
+
+SAEM.LambdaRinit = 3.5*std(data.Z); 
+SAEM.LambdaOinit = 0.05;
+
+SAEM.NbrIter = 3e5;
+
+SAEM.pas_vect_R = 0.01*[ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(SAEM.NbrIter-110))];
+SAEM.pas_vect_O = 0.5*[0.1*ones(1,10) 0.05*ones(1,100) 0.1./sqrt(100:100+(SAEM.NbrIter-110))];
+
+SAEM.controldisplay = 1;
+
+MCMC.chain_length = [1e7 5e6  4e3*ones(1,SAEM.NbrIter-2)];
+MCMC.chain_burnin =[0.5*MCMC.chain_length(1:5) zeros(1,SAEM.NbrIter-5)];
+
+MCMC.GammaTildeR = 1e-12;
+MCMC.GammaO = 1e3; 
+
+MCMC.target_ratioAR = 0.25;    
+MCMC.adapt_frequency = max(MCMC.chain_burnin/500,500); 
+
+outputSAEM = SAEM_nomixture(data,SAEM,MCMC);
+
+%% Display the LambdaR sequence produced by SAEM
+figure(1)
+clf
+plot(2:SAEM.NbrIter+1,StoreLambdaR(1,2:SAEM.NbrIter+1),);
+grid on
+caption = sprintf('SAEM sequence: \lambda_R');
+title(caption,'FontSize',10);
+
+%% Display the LambdaO sequence produced by SAEM
+figure(2)
+clf
+plot(2:SAEM.NbrIter+1,StoreLambdaO(1,2:SAEM.NbrIter+1),);
+grid on
+caption = sprintf('SAEM sequence: \lambda_O');
+title(caption,'FontSize',10);
+```
