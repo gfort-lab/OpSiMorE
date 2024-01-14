@@ -226,7 +226,7 @@ A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in **Gib
 % The initial value MCMC.initial_pointR of the vector R was obtained from: 
     % a code by [B. Pascal](https://bpascal-fr.github.io/), which computes the MAP of \pi  given a set of values for (\lambda_R, \lambda_O)
     % Here, $\lambda_R$ and $\lambda_O$ are fixed to 3.5 std(data.Z) and 0.05 respectively.
-% The initial valueMCMC.initial_pointO  of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
+% The initial value MCMC.initial_pointO  of O_t is chosen as a linear convex combination of Z_t and R_t Phi_t.
 
 load FranceDataSet1.mat
 
@@ -370,15 +370,15 @@ load FranceDataSet1.mat
 SAEM.LambdaRinit = 3.5*std(data.Z); 
 SAEM.LambdaOinit = 0.05;
 
-SAEM.NbrIter = 3e5;
+SAEM.NbrIter = 5e5;
 
-SAEM.pas_vect_R = 0.01*[ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(SAEM.NbrIter-110))];
+SAEM.pas_vect_R = 0.05*[ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(SAEM.NbrIter-110))];
 SAEM.pas_vect_O = 0.5*[0.1*ones(1,10) 0.05*ones(1,100) 0.1./sqrt(100:100+(SAEM.NbrIter-110))];
 
 SAEM.controldisplay = 1;
 
-MCMC.chain_length = [1e7 5e6  4e3*ones(1,SAEM.NbrIter-2)];
-MCMC.chain_burnin =[0.5*MCMC.chain_length(1:5) zeros(1,SAEM.NbrIter-5)];
+MCMC.chain_length = [1e7 5e6  3e3*ones(1,SAEM.NbrIter-2)];
+MCMC.chain_burnin =ceil(0.5*MCMC.chain_length);
 
 MCMC.GammaTildeR = 1e-12;
 MCMC.GammaO = 1e3; 
