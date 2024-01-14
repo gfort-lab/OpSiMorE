@@ -325,16 +325,16 @@ The structure _data_ with fields
 - _Rinit_ : 2x1, the initial values $R_{-1}$ and $R_0$
 
 The _SAEM_structure with fields
-- _NbrIter_: 1x1, number of iterations of SAEM; default value is 3e5
+- _NbrIter_: 1x1, number of iterations of SAEM; default value is 5e5
 - _LambdaRinit_: 1x1, initial value of the $\lambda_R$ sequence; default value is 3.5*std(data.Z)
 - _LambdaOinit_: 1x1, initial value of the $\lambda_O$ sequence; default value is 0.05
-- _pas\_vect\_R_: 1xSAEM.NbrIter, sequence of SAEM learning rate; default value is 0.01*((ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(SAEM.NbrIter-110)));
+- _pas\_vect\_R_: 1xSAEM.NbrIter, sequence of SAEM learning rate; default value is 0.05*((ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(SAEM.NbrIter-110)));
 - _pas\_vect\_O_: 1xSAEM.NbrIter, sequence of SAEM learning rate; default value is 0.5*(0.1*ones(1,10) 0.05*ones(1,100) 0.1./sqrt(100:100+(SAEM.NbrIter-110)))
 - _controldisplay_: 1x1, a binary variable set to '1' for the display of the SAEM sequence every 5e2 iterations, and '0' otherwise.
 
 The _MCMC_structure with fields
-- _chain_length_: 1xSAEM.NbrIter, the length of the MCMC chain at each iteration of SAEM; default value is (1e7 5e6  2e3*ones(1,SAEM.NbrIter-2))
-- _chain_burnin_: 1xSAEM.NbrIter, the length of the burnin phase when running the MCMC chain  at each iteration of SAEM; default value is 0.5*(1e7 5e6  2e3*ones(1,SAEM.NbrIter-2))
+- _chain_length_: 1xSAEM.NbrIter, the length of the MCMC chain at each iteration of SAEM; default value is (1e7 5e6  3e3*ones(1,SAEM.NbrIter-2))
+- _chain_burnin_: 1xSAEM.NbrIter, the length of the burnin phase when running the MCMC chain  at each iteration of SAEM; default value is 0.5*_MCMC.chain_length_
 - _initial\_pointR_: Tx1, the initial value of the R-chain for the first iteration of SAEM
 - _initial\_pointO_: Tx1, the initial value of the O-chain for the first iteration of SAEM
 - _GammaTildeR_: 1x1, the initial value of the $\gamma_{\tilde R}$ parameter when running the MCMC chain for the first iteration of SAEM; default value is 1e-12
