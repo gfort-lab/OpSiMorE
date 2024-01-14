@@ -236,7 +236,7 @@ end
 %% Output
 %%%%%%%%%%
 % Display a wrning if the acceptance rate is to low
-if ((globalARrateO/NbrMC)<=0.8*MCMC.target_ratioAR)
+if ((burnin>0) && ((globalARrateO/NbrMC)<=0.8*MCMC.target_ratioAR))
     sprintf('In GibbsPGdual_nomixture: the acceptance rate is low')
 end
 
@@ -262,7 +262,7 @@ output.lastsampleO = Ocurrent;  % T x 1
 % The successive values of LogPi
 output.LogPi = StoreLogPi;
 
-if length(vectQ)>0,
+if length(vectQ)>0
     % Some quantiles, for each component of the R and O chains (burnin phase, discarded)
     MatrixQuantileR = zeros(length(vectQ),T);   
     MatrixQuantileO = zeros(length(vectQ),T);

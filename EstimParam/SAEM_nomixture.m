@@ -19,7 +19,7 @@ T = size(Z,1);
 if isfield(SAEM,'NbrIter')
     NbrIter  = SAEM.NbrIter; 
 else 
-    NbrIter  = 3e5; 
+    NbrIter  = 5e5; 
 end
 
 
@@ -42,7 +42,7 @@ end
 if isfield(SAEM,'pas_vect_R')
     pas_vect_R  = SAEM.pas_vect_R; 
 else 
-    pas_vect_R = 0.01*[ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(NbrIter-110))];
+    pas_vect_R = 0.05*[ones(1,10) 2*ones(1,100) 4./sqrt(100:100+(NbrIter-110))];
 end
 if isfield(SAEM,'pas_vect_O')
     pas_vect_O  = SAEM.pas_vect_O; 
@@ -59,14 +59,14 @@ controldisplay = SAEM.controldisplay;
 if isfield(MCMC,'chain_length')
     NbrMC  = MCMC.chain_length; 
 else 
-    NbrMC  = [1e7 5e6  2e3*ones(1,NbrIter-2)];
+    NbrMC  = [1e7 5e6  3e3*ones(1,NbrIter-2)];
 end
 
 % Length of the burnin
 if isfield(MCMC,'chain_burnin')
     burnin = MCMC.chain_burnin; 
 else 
-    burnin  = ceil(0.5*[1e7 5e6  2e3*ones(1,NbrIter-2)]);
+    burnin  = ceil(0.5*NbrMC);
 end
 
 % Initial point of the chain, for R
