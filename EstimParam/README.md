@@ -395,7 +395,7 @@ outputSAEM = SAEM_nomixture(data,SAEM,MCMC);
 %% Display the LambdaR sequence produced by SAEM
 figure(1)
 clf
-plot(2:SAEM.NbrIter+1,StoreLambdaR(1,2:SAEM.NbrIter+1),);
+plot(2:SAEM.NbrIter+1,outputSAEM.LambdaRpath(1,2:SAEM.NbrIter+1),);
 grid on
 caption = sprintf('SAEM sequence: \lambda_R');
 title(caption,'FontSize',10);
@@ -403,7 +403,7 @@ title(caption,'FontSize',10);
 %% Display the LambdaO sequence produced by SAEM
 figure(2)
 clf
-plot(2:SAEM.NbrIter+1,StoreLambdaO(1,2:SAEM.NbrIter+1),);
+plot(2:SAEM.NbrIter+1,outputSAEM.LambdaOpath(1,2:SAEM.NbrIter+1),);
 grid on
 caption = sprintf('SAEM sequence: \lambda_O');
 title(caption,'FontSize',10);
