@@ -215,6 +215,10 @@ A structure _output_ with the same fields _GammaTildeR_ and _GammaO_ as in **Gib
 - _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi^{(1)}$
 - _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi^{(2)}$
 - _Lambdachain_ : 2xL, the bivariate Markov chain approximating $\pi^{(2)}$; the samples from the burnin period are discarded so that L = MCMC.chain\_length-MCMC.chain\_burnin.
+- _lastR_ : T x 1, the last sample of the R-chain
+- _lastO_ : T x 1, the last sample of the O-chain
+- _lastLR_ : 1 x 1, the last sample of the $\lambda_R$ chain
+- _lastLO_ : 1 x 1, the last sample of the $\lambda_O$ chain
 
 ### ${\color{violet} \text{Example}}$
 (see [camsap23 paper](https://hal.science/hal-04174245v2)) for details on data.Z, data.Phi, data.Rinit
