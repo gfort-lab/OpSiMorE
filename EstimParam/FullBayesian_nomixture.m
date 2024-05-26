@@ -138,6 +138,8 @@ StoreLRchain = zeros(1,NbrMC+1);
 StoreLRchain(:,1) = LambdaRcurrent;
 StoreLOchain = zeros(1,NbrMC+1);
 StoreLOchain(:,1) = LambdaOcurrent;
+StorelogPi = zeros(1,NbrMC+1);
+StorelogPi(1) = LogPicurrent ; 
 
 % Sample i.i.d. gamma variables with parameters ((T+1),1).
 RndGamma = gamrnd((T+1)*ones(NbrMC,2), ones(NbrMC,2));
@@ -223,7 +225,6 @@ for nn=1:NbrMC
             localARrateO = 0;
     end;
         
-
     %% Sample the LamdbaR and LambdaO chains
     aux = RndGamma(nn,:)./[StatRcurrent StatOcurrent];
     LambdaRcurrent = aux(1);
@@ -237,7 +238,8 @@ for nn=1:NbrMC
     StoreLRchain(1,nn+1) = LambdaRcurrent;
     StoreLOchain(1,nn+1) = LambdaOcurrent;
     
-
+   %% store logPi
+    StorelogPi(:,nn+1) = LogPicurrent;
 end
 
 
@@ -260,6 +262,11 @@ output.empirical_meanR = mean(auxRchain,2);
 output.empirical_meanO = mean(auxOchain,2);
 output.empirical_meanLR = mean(auxLRchain,2);
 output.empirical_meanLO = mean(auxLOchain,2);
+output.lastLR = auxLRchain(NbrMC-burnin);
+output.lastLO = auxLOchain(NbrMC-burnin);
+output.lastR = auxRchain(:,NbrMC-burnin);
+output.lastO = auxOchain(:,NbrMC-burnin);
+output.logPi = StorelogPi(burnin+1:NbrMC+1);
 
 % Some quantiles, for each component of the R and O chains (burnin phase, discarded)
 MatrixQuantileR = zeros(length(vectQ),T);   
