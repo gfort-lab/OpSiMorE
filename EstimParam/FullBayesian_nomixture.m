@@ -141,8 +141,9 @@ StoreLOchain(:,1) = LambdaOcurrent;
 StorelogPi = zeros(1,NbrMC+1);
 StorelogPi(1) = LogPicurrent ; 
 
-% Sample i.i.d. gamma variables with parameters ((T+1),1).
-RndGamma = gamrnd((T+1)*ones(NbrMC,2), ones(NbrMC,2));
+
+%% Sample iid Gamma random variables NbrMC x 2 
+RndGamma = gamrnd((T+1)*ones(NbrMC,2),ones(NbrMC,2));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Iterate a Metropolis-within-Gibbs algorithm
@@ -231,6 +232,8 @@ for nn=1:NbrMC
     LambdaOcurrent = aux(2);
     StatLRcurrent = T*log(LambdaRcurrent);
     StatLOcurrent = T*log(LambdaOcurrent);
+    LogPicurrent = Z'*log(Intensitycurrent)-sum(Intensitycurrent)-LambdaRcurrent*StatRcurrent-LambdaOcurrent*StatOcurrent+StatLRcurrent+StatLOcurrent;
+
 
     %% store the chain
     StoreRchain(:,nn+1) = Rcurrent;
