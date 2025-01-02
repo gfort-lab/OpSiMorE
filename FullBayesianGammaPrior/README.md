@@ -25,7 +25,7 @@ up to an additive constant on the support of the distribution, and $-\infty$ oth
 > \end{split}}
 > $$
 
-$\pi$ depends on four positive parameters $\alpha_R, beta_R, \alpha_O,\beta_O$ which are (hyper)parameters of the Gamma priors on $\lambda_R$ and $\lambda_O$ (see [ICASSP 2025](<https://hal.science/hal-04695138>)). 
+$\pi$ depends on four positive parameters $\alpha_R, \beta_R, \alpha_O,\beta_O$ which are (hyper)parameters of the Gamma priors on $\lambda_R$ and $\lambda_O$ (see [ICASSP 2025](<https://hal.science/hal-04695138>)). 
 
 
 
