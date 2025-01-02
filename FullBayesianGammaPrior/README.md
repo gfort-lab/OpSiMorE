@@ -37,8 +37,6 @@ We denote by $\tilde \pi$ the marginal of $\pi$ given by
 
 This MATLAB code runs a Gibbs sampler with target distribution $\pi$: more precisely, the variables $(R_1,O_1, R_2, O_2, \cdots, R_T, O_T)$ are sampled via a Metropolis-within-Gibbs, and the variables $(\lambda_R, \lambda_O)$ are sampled via two independent Gamma distributions with shape and rate parameters given by Eq(13) in [ICASSP 2025](<https://hal.science/hal-04695138>).
 
-It returns   XXXX 
-
 The proposal mechanism of the Metropolis-within-Gibbs step, depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
 
 ### ${\color{violet} \text{Input structures}}$
@@ -69,7 +67,7 @@ A structure _MCMC_ with fields
 A structure _output_ with fields
 - _GammaTildeR_ : 1x1, step size when proposing a candidate for the second derivative of the R_t variables
 - _GammaO_ : 1x1, step size when proposing a candidate for the O_t variables
-- _Lambdachain_ : 2xNbrMC, the components $(\lambda_R,\lambdaO)$ of the Markov chain -- the burnin samples are not discarded.
+- _Lambdachain_ : 2xNbrMC, the components $(\lambda_R,\lambda_O)$ of the Markov chain -- the burnin samples are not discarded.
 - _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution $\pi$ -- computed after discarding burn-in samples.
 - _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi$ -- computed after discarding burn-in samples.
 - _empirical_meanLR_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_R$ under the distribution $\pi$ -- computed after discarding burn-in samples.
@@ -80,7 +78,7 @@ A structure _output_ with fields
 - _lastLO_ : 1x1, the last MCMC sample $\lambda_O$
 - _logPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations
 - _logMarginal_ : 1xchain\_length, the values of $\log \tilde \pi$ along the MCMC iterations
-- 
+  
 and, if _MCMC.Qvec_ is not empty,
 - _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi$
 - _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi$
