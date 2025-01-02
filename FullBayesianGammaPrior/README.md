@@ -101,7 +101,7 @@ and, if _MCMC.Qvec_ is not empty,
 
 load FranceDataSet1_ICASSP2025.mat
 
-MCMC.chain_length = 4e7;
+MCMC.chain_length = 1e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
 MCMC.GammaTildeR = 1e-12;
 MCMC.GammaO = 1e3;
