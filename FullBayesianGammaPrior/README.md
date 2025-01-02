@@ -43,14 +43,18 @@ A structure _data_ with fields
 - _Z_ : Tx1, the sequence $Z_1, \cdots, Z_T$
 - _Phi_ : Tx1, the sequence $\Phi_1, \cdots, \Phi_T$
 - _Rinit_ : 2x1, the initial values $R_{-1}$ and $R_0$
-- _LambdaR_ : 1x1, the value of $\lambda_R$
-- _LambdaO_ : 1x1, the value of $\lambda_O$ 
+- _shapeR_ : 1x1, the value of $\alpha_R$, the shape parameter of the Gamma prior on $\lambda_R$
+- _shapeO_ : 1x1, the value of $\alpha_O$, the shape parameter of the Gamma prior on $\lambda_O$
+- _inversescaleR_ : 1x1, the value of $\beta_R$, the inverse scale parameter of the Gamma prior on $\lambda_R$
+- _inversescaleO_ : 1x1, the value of $\beta_O$, the inverse scale parameter of the Gamma prior on $\lambda_O$
 
 A structure _MCMC_ with fields
 - _chain\_length_ : 1x1, number of MCMC iterations; default value 1e7
--  _chain\_burnin_ : 1x1, length of the burnin period; default value 0.5*1e7
--  _initial\_pointR_ : Tx1, initial value of the R chain
--  _initial\_pointO_ : Tx1, initial value of the O chain
+-  _chain\_burnin_ : 1x1, length of the burnin period; default value 0.5*_chain\_length_
+-  _initial\_pointR_ : Tx1, initial value $(R_1, \cdots, R_T)$ of the R chain 
+-  _initial\_pointO_ : Tx1, initial value $(O_1, \cdots, O_T)$ of the O chain
+-  _initial\_pointLR_ : 1x1, initial value of the $\lambda_R$ chain; default value is $3.5  \mathrm{std}(Z)$
+- _initial\_pointLO_ : 1x1, initial value of the $\lambda_O$ chain; default value is $0.05$
 -  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
 -  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of the $R_t$ variables; default value 1e-12
 -  _adapt_frequency_ : 1x1, how frequent the adaptation mechanism of the parameters $\gamma_{\tilde R}$ and $\gamma_O$ is; default value is 1e4 iterations
@@ -60,21 +64,25 @@ A structure _MCMC_ with fields
   
 ### ${\color{violet} \text{Output structures}}$
 A structure _output_ with fields
-- _StatR_ : the Monte Carlo approximation of $I_R(\lambda_R,\lambda_O)$
-- _StatO_ : the Monte Carlo approximation of $I_O(\lambda_R,\lambda_O)$
-- _GammaTildeR_ : step size when proposing a candidate for the second derivative of the R_t variables
-- _GammaO_ : step size when proposing a candidae for the O_t variables
-- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution $\pi(\cdot; \lambda_R,\lambda_0)$
-- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi(\cdot; \lambda_R,\lambda_0)$
-- _lastsampleR_ : Tx1, the last MCMC sample R
-- _lastsampleO_ : Tx1, the last MCMC sample O
-- _LogPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations
-  
+- _GammaTildeR_ : 1x1, step size when proposing a candidate for the second derivative of the R_t variables
+- _GammaO_ : 1x1, step size when proposing a candidate for the O_t variables
+- _empirical_meanR_ : Tx1, a Monte Carlo approximation of the expectation of $(R_1, \cdots, R_T)$ under the distribution $\pi$ -- computed after discarding burn-in samples.
+- _empirical_meanO_ : Tx1, a Monte Carlo approximation of the expectation of $(O_1, \cdots, O_T)$ under the  distribution $\pi$ -- computed after discarding burn-in samples.
+- _empirical_meanLR_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_R$ under the distribution $\pi$ -- computed after discarding burn-in samples.
+- _empirical_meanLO_ : 1x1, a Monte Carlo approximation of the expectation of $\lambda_O$ under the  distribution $\pi$ -- computed after discarding burn-in samples.
+- _lastR_ : Tx1, the last MCMC sample $(R_1, \cdots, R_T)$
+- _lastO_ : Tx1, the last MCMC sample $(O_1, \cdots, O_T)$
+- _lastLR_ : 1x1, the last MCMC sample $\lambda_R$
+- _lastLO_ : 1x1, the last MCMC sample $\lambda_O$
+- _logPi_ : 1xchain\_length, the values of $\log \pi$ along the MCMC iterations
+- _logMarginal_ : 1xchain\_length, the values of $\log \tilde \pi$ along the MCMC iterations
+- 
 and, if _MCMC.Qvec_ is not empty,
-- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
-- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi(\cdot; \lambda_R,\lambda_0)$
+- _quantilesR_ : length(Qvec) x T, the quantiles of $R_1, \cdots, R_T$ under the marginal distributions of $\pi$
+- _quantilesO_ : length(Qvec) x T, the quantiles of $O_1, \cdots, O_T$ under the marginal distributions of $\pi$
+- _quantilesLR_ : length(Qvec) x 1, the quantiles of $\lambda_R$ under the marginal distributions of $\pi$
+- _quantilesLO_ : length(Qvec) x 1, the quantiles of $\lambda_O$ under the marginal distributions of $\pi$
 
-In case the global acceptance rate (including the burnin phase) is lower than $0.8$  _MCMC.target\_ratioAR_, the message "_In GibbsPGdual\_nomixture: the acceptance rate is low_" is printed.  
 
 
 ### ${\color{violet} \text{Example}}$
