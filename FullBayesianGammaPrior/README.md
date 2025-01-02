@@ -5,7 +5,7 @@
 
 a distribution $\pi$ is defined on $(\mathbb{R}\_{>0} \times \mathbb{R})^{T} \times \mathbb{R}\_{>0} \times \mathbb{R}_{>0}$
 
-The log-density is given by 
+The log-density $\log \pi$ is given by 
 > $$ 
 > {\small \begin{split}
 > (R_1, O_1, \cdots, R_T, O_T, \lambda_R, \lambda_O) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
@@ -16,7 +16,7 @@ The log-density is given by
 \end{split} } 
 > $$
 
-up to an additive constant. The support of the distribution is the set $\mathcal{D} \times \mathbb{R}\_{>0} \times \mathbb{R}\_{>0}$ where $\mathcal{D}$ is defined by
+up to an additive constant on the support of the distribution, and $-\infty$ otherwise. The support of the distribution is the set $\mathcal{D} \times \mathbb{R}\_{>0} \times \mathbb{R}\_{>0}$ where $\mathcal{D}$ is defined by
 
 > $$
 > {\small \begin{split}
