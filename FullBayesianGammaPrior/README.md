@@ -3,10 +3,9 @@
 - T mean values $\Phi_1, \cdots, \Phi_T$ taking values in $\mathbb{R}_{\geq 0}$
 - Two initial values $R_{-1}, R_0$ for the reproduction number  taking values in $\mathbb{R}_{>0}$
 
-a distribution $\pi$ is defined on 
-$(\mathbb{R}_{>0} \times \mathbb{R})^{T} \times \mathbb{R}_{>0} \times \mathbb{R}_{>0}$. 
-The log-density is given by 
+a distribution $\pi$ is defined on $(\mathbb{R}\_{>0} \times \mathbb{R})^{T} \times \mathbb{R}\_{>0} \times \mathbb{R}_{>0}$
 
+The log-density is given by 
 > $$ 
 > {\small \begin{split}
 > (R_1, O_1, \cdots, R_T, O_T, \lambda_R, \lambda_O) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
@@ -17,47 +16,27 @@ The log-density is given by
 \end{split} } 
 > $$
 
-up to an additive constant. The support of the distribution is the set $\mathcal{D} \times \mathbb{R}_{>0} \times \mathbb{R}_{>0}$ where $\mathcal{D}$ is defined by
+up to an additive constant. The support of the distribution is the set $\mathcal{D} \times \mathbb{R}\_{>0} \times \mathbb{R}\_{>0}$ where $\mathcal{D}$ is defined by
 
 > $$
- {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
+> {\small \begin{split}
+> \text{for} \ t=1, \cdots, T :  \qquad & R_t > 0;  \\
+> & \text{and} \quad   R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.
+> \end{split}}
 > $$
 
-$\pi(\cdot; \lambda_R,\lambda_O)$ depends on two positive parameters $\lambda_R$ and $\lambda_O$, and two initial values $R_{-1}, R_0$.
-
-**Model "mixture"**  $\pi_m$
-
-A target distribution $\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ on $(\mathbb{R}_{>0} \times \mathbb{R} \times \\{0,1\\} )^{T}$. The log-density $\ln \pi_m$ is given by
-
->  $$ 
- {\small \begin{split} (R_1, O_1, B_1, \cdots, R_T, O_T, B_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
-& - \frac{\lambda_R}{4} \sum_{t=1}^T | R_t - 2 R_{t-1} + R_{t-2} | + T \ln \lambda_R   \\
-& - \lambda_{O,0}  \sum_{t=1}^T (1-B_t) |O_t| + (T-\sum_{t=1}^T B_t) \ln \lambda_{O,0} \\
-& - \lambda_{O,1}  \sum_{t=1}^T B_t |O_t| + (\sum_{t=1}^T B_t) \ln \lambda_{O,1} \\
-& + (T-\sum_{t=1}^T B_t) \ln (1-\omega) +  (\sum_{t=1}^T B_t) \ln \omega 
-\end{split}}
-> $$ 
-
-up to an additive constant. The support of the distribution is the set $\mathcal{D}_m$ defined by 
-
-> $$
-> {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad B_t \in \\{0,1\\}; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
-> $$
-
-$\pi_m(\cdot; \lambda_R,\lambda_{O,0},\lambda_{O,1},\omega)$ depends on three positive parameters $\lambda_R$, $\lambda_{O,0}$ and $\lambda_{O,1}$, a weight $\omega \in (0,1)$, and two initial values $R_{-1}, R_0$.
+$\pi$ depends on four positive parameters $\alpha_R, beta_R, \alpha_O,\beta_O$ which are (hyper)parameters of the Gamma priors on $\lambda_R$ and $\lambda_O$ (see [ICASSP 2025](<https://hal.science/hal-04695138>)). 
 
 
-## ${\color{blue} \text{GibbsPGdual\\_nomixture}}$
 
-This MATLAB code runs a Metropolis-within-Gibbs sampler with target distribution $\pi(\cdot; \lambda_R,\lambda_{O})$ and returns a Monte Carlo approximation for each expectation $I_R$ and $I_O$:  
 
- >$$ 
- {\small \begin{split}  I_R(\lambda_R,\lambda_O) & := \frac{1}{4} \int_{\mathcal{D}} \ \sum_{t=1}^T |r_t - 2 r_{t-1} + r_{t-2}| \ \   \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O) \ \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T \\   
- I_O(\lambda_R,\lambda_O) &:= \int_{\mathcal{D}} \  \sum_{t=1}^T |o_t| \ \  \pi(r_1,o_1, \cdots, r_T, o_T; \lambda_R,\lambda_O)  \  \mathrm{d}r_1 \mathrm{d} o_1 \cdots \mathrm{d} r_T \mathrm{d} o_T.
- \end{split}}
- >$$
+## ${\color{blue} \text{FullBayesian\\_PriorGamma}}$
 
-The proposal mechanism depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
+This MATLAB code runs a Gibbs sampler with target distribution $\pi$: more precisely, the variables $(R_1,O_1, R_2, O_2, \cdots, R_T, O_T)$ are sampled via a Metropolis-within-Gibbs, and the variables $(\lambda_R, \lambda_O)$ are sampled via two independent Gamma distributions with shape and rate parameters given by Eq(13) in [ICASSP 2025](<https://hal.science/hal-04695138>).
+
+It returns   XXXX 
+
+The proposal mechanism of the Metropolis-within-Gibbs step, depends on design parameters: they are adapted during the burnin phase in order to target a given mean acceptance ratio. 
 
 ### ${\color{violet} \text{Input structures}}$
 A structure _data_ with fields
