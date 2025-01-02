@@ -56,8 +56,8 @@ A structure _MCMC_ with fields
 -  _initial\_pointO_ : Tx1, initial value $(O_1, \cdots, O_T)$ of the O chain
 -  _initial\_pointLR_ : 1x1, initial value of the $\lambda_R$ chain; default value is $3.5  \mathrm{std}(Z)$
 - _initial\_pointLO_ : 1x1, initial value of the $\lambda_O$ chain; default value is $0.05$
--  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
 -  _GammaTildeR_ : 1x1, initial value of the step size when proposing a candidate for the second derivative of the $R_t$ variables; default value 1e-12
+-  _GammaO_: 1x1, initial value of the step size when proposing a candidate for the $O_t$ variables; default value 1e3
 -  _adapt_frequency_ : 1x1, how frequent the adaptation mechanism of the parameters $\gamma_{\tilde R}$ and $\gamma_O$ is; default value is 1e4 iterations
 -  _target\_ratioAR_ : 1x1, targeted acceptance ratio during the adaptation mechanism; default value 0.25
 - _Qvec_ : vector of order of quantiles; may be empty by setting _MCMC.Qvec = []_. Default value (0.025 0.05 0.1 0.5 0.9 0.95 0.975)
@@ -101,15 +101,13 @@ and, if _MCMC.Qvec_ is not empty,
 
 load FranceDataSet1_ICASSP2025.mat
 
-MCMC.Qvec= [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
-
-MCMC.chain_length = 1e7;
+MCMC.chain_length = 4e7;
 MCMC.chain_burnin = ceil(0.5*MCMC.chain_length);
-
 MCMC.GammaTildeR = 1e-12;
 MCMC.GammaO = 1e3;
 MCMC.adapt_frequency = 1e4;
 MCMC.target_ratioAR = 0.25;
+MCMC.Qvec= [0.025 0.05 0.1 0.5 0.9 0.95 0.975];
 
 [output] = FullBayesian_PriorGamma(data,MCMC);
 
@@ -172,6 +170,7 @@ title('distribution of \lambda_R under \pi')
 subplot(2,1,2);
 histogram(output.Lambdachain(2,forget+1:end),'Normalization','pdf');
 title('distribution of  \lambda_O under \pi')
+
 
 
 
