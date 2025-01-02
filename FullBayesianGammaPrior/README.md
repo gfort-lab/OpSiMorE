@@ -95,9 +95,10 @@ and, if _MCMC.Qvec_ is not empty,
 % data.Z is part of a time series downloaded from JHU repository
 % data.Phi is built from this time series 
 % data.Rinit is built from this time series 
-% The initial value MCMC.initial_pointR of the vector R is set to the constant vector $(1, \cdots, 1)$
-% The initial value MCMC.initial_pointO  of the vector O is the vector of coordinates $(Z_t - R_t Phi_t)/2$.
-% The initial values MCMC.initial_pointLR and MCMC.initial_pointLO are set to 3.5 std(data.Z) and 0.05 respectively.
+% The initial value
+   % MCMC.initial_pointR of the vector R is set to the constant vector $(1, \cdots, 1)$
+   % MCMC.initial_pointO  of the vector O is the vector of coordinates $(Z_t - R_t Phi_t)/2$.
+   % MCMC.initial_pointLR and MCMC.initial_pointLO are set to 3.5 std(data.Z) and 0.05 respectively.
 
 load FranceDataSet1_ICASSP2025.mat
 
