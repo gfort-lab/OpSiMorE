@@ -3,21 +3,21 @@
 - T mean values $\Phi_1, \cdots, \Phi_T$ taking values in $\mathbb{R}_{\geq 0}$
 - Two initial values $R_{-1}, R_0$ for the reproduction number  taking values in $\mathbb{R}_{>0}$
 
-two distributions are defined.
-
-**Model "no mixture"** $\pi$ 
-
-A target distribution $\pi(\cdot; \lambda_R,\lambda_O)$ on $(\mathbb{R}_{>0} \times \mathbb{R})^{T}$. The log-density $\ln \pi(\cdot; \lambda_R,\lambda_O)$ is given by
+a distribution $\pi$ is defined on 
+$(\mathbb{R}_{>0} \times \mathbb{R})^{T} \times \mathbb{R}_{>0} \times \mathbb{R}_{>0}$. 
+The log-density is given by 
 
 > $$ 
 > {\small \begin{split}
-> (R_1, O_1, \cdots, R_T, O_T) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
+> (R_1, O_1, \cdots, R_T, O_T, \lambda_R, \lambda_O) & \mapsto \sum_{t=1}^T \Bigl( Z_t \ln( R_t \Phi_t+O_t) - (R_t \Phi_t + O_t) \Bigr)  \\
 > & - \frac{\lambda_R}{4} \sum_{t=1}^T | R_t - 2 R_{t-1} + R_{t-2} | + T \ln \lambda_R   \\
-> & - \lambda_O  \sum_{t=1}^T |O_t| + T \ln \lambda_O
-\end{split} }
+> & - \lambda_O  \sum_{t=1}^T |O_t| + T \ln \lambda_O \\
+> & -\beta_R \lambda_R + (\alpha_R -1) \ln \lambda_R \\
+> & - \beta_O \lambda_O + (\alpha_O -1) \ln \lambda_O
+\end{split} } 
 > $$
 
-up to an additive constant. The support of the distribution is the set $\mathcal{D}$ defined by
+up to an additive constant. The support of the distribution is the set $\mathcal{D} \times \mathbb{R}_{>0} \times \mathbb{R}_{>0}$ where $\mathcal{D}$ is defined by
 
 > $$
  {\small \text{for} \ t=1, \cdots,T, \qquad R_t > 0; \qquad \qquad  R_t \Phi_t + O_t > 0  \quad \text{if} \quad Z_t >0, \quad \text{or} \quad R_t \Phi_t + O_t \geq 0  \quad \text{if} \quad Z_t  \geq 0.}
