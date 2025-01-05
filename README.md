@@ -34,7 +34,7 @@ In this repository, the subdirectory *ToyExample* contains the MATLAB codes for 
   - ---
 
 # <h3 style="color:#ff0000"> Parameter estimation for the Covid19 Reproduction number</h3>
-[Here](https://github.com/gfort-lab/OpSiMorE/tree/master/EstimParameter) are the codes associated to the paper
+[Here](https://github.com/gfort-lab/OpSiMorE/tree/master/EstimParam) are the codes associated to the paper
   - Pandemic Intensity Estimation From Stochastic Approximation-Based Algorithms, by P. Abry, J. Chevallier, G. Fort and B. Pascal. Accepted for publication in [CAMSAP 2023](<https://ieeexplore.ieee.org/document/10403431>) proceedings; see also [HAL version](<https://hal.science/hal-04174245v2>).
   
   - ---
