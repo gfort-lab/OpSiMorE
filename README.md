@@ -34,12 +34,12 @@ Here are the codes associated to the papers
   - ---
 
 # <h3 style="color:#ff0000"> Parameter estimation for the Covid19 Reproduction number</h3>
-Here are the codes associated to the paper
+[Here](https://github.com/gfort-lab/OpSiMorE/tree/master/ParameterEstimation) are the codes associated to the paper
   - Pandemic Intensity Estimation From Stochastic Approximation-Based Algorithms, by P. Abry, J. Chevallier, G. Fort and B. Pascal. Accepted for publication in [CAMSAP 2023](<https://ieeexplore.ieee.org/document/10403431>) proceedings; see also [HAL version](<https://hal.science/hal-04174245v2>).
   
   - ---
 
 # <h3 style="color:#ff0000">Full Bayesian with Gamma prior</h3>
-Here are the codes associated to the paper 
+[Here](https://github.com/gfort-lab/OpSiMorE/tree/master/FullBayesianGammaPrior) are the codes associated to the paper 
   - Hierarchical Bayesian Estimation of COVID-19 Reproduction Number, by P. Abry, J. Chevallier, G. Fort and B. Pascal.
 Accepted for publication in [ICASSP 2025](<https://hal.science/hal-04695138>) proceedings.
